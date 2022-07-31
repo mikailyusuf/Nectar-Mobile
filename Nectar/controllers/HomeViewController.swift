@@ -19,7 +19,7 @@ class HomeViewController: UITabBarController {
         let vc5 = AccountViewController()
    
         
-        vc1.title = "Shop"
+//        vc1.title = "Shop"
         vc2.title = "Explore"
         vc3.title = "Cart"
         vc4.title = "Favourite"
@@ -31,13 +31,15 @@ class HomeViewController: UITabBarController {
         let nav4 = UINavigationController(rootViewController: vc4)
         let nav5 = UINavigationController(rootViewController: vc5)
         
-        nav1.tabBarItem = UITabBarItem(title:"Shop", image:UIImage(named:"shop_icon"), tag: 1)
-        nav2.tabBarItem = UITabBarItem(title:"Explore", image:UIImage(named: "search_icon"), tag: 2)
-        nav3.tabBarItem = UITabBarItem(title:"Cart", image:UIImage(named: "cart_icon"), tag: 3)
-        nav4.tabBarItem = UITabBarItem(title:"Favourite", image:UIImage(named: "favourite"), tag: 3)
-        nav5.tabBarItem = UITabBarItem(title:"Account", image:UIImage(named: "account_icon"), tag: 3)
+   
+        nav1.tabBarItem = UITabBarItem(title:"Shop", image:UIImage(systemName: "house"), tag: 1)
+        nav2.tabBarItem = UITabBarItem(title:"Explore", image:UIImage(systemName: "magnifyingglass"), tag: 2)
+        nav3.tabBarItem = UITabBarItem(title:"Cart", image:UIImage(systemName: "cart"), tag: 3)
+        nav4.tabBarItem = UITabBarItem(title:"Favourite", image:UIImage(systemName: "suit.heart"), tag: 4)
+        nav5.tabBarItem = UITabBarItem(title:"Account", image:UIImage(systemName: "person"), tag: 5)
         
         
+        self.navigationController?.tabBarItem.imageInsets = UIEdgeInsets(top: 5,left: 0,bottom: -5,right: 0)
         setViewControllers([nav1,nav2,nav3,nav4,nav5], animated: true)
     
     }

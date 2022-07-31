@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5204A6AA288AE0A500DE4C41 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204A6A9288AE0A500DE4C41 /* Constants.swift */; };
-		5204A6AE288AE40B00DE4C41 /* Gilroy-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5204A6AB288AE40B00DE4C41 /* Gilroy-Light.ttf */; };
-		5204A6AF288AE40B00DE4C41 /* Gilroy-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5204A6AC288AE40B00DE4C41 /* Gilroy-Medium.ttf */; };
-		5204A6B0288AE40B00DE4C41 /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5204A6AD288AE40B00DE4C41 /* Gilroy-Bold.ttf */; };
 		5204A6B2288AEB9A00DE4C41 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204A6B1288AEB9A00DE4C41 /* LoginViewController.swift */; };
 		5204A6B4288AEBB700DE4C41 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204A6B3288AEBB700DE4C41 /* SignUpViewController.swift */; };
 		5204A6B6288AFF9E00DE4C41 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204A6B5288AFF9E00DE4C41 /* Utilities.swift */; };
@@ -21,6 +18,7 @@
 		5204A6C0288C37BE00DE4C41 /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204A6BF288C37BE00DE4C41 /* FavouriteViewController.swift */; };
 		5204A6C2288C37CC00DE4C41 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204A6C1288C37CC00DE4C41 /* AccountViewController.swift */; };
 		5204A6C4288C4EDF00DE4C41 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204A6C3288C4EDF00DE4C41 /* ApiManager.swift */; };
+		5221D5842896ADDF009177B3 /* ProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221D5832896ADDF009177B3 /* ProductCollectionViewCell.swift */; };
 		52661E0A288346850092A5FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52661E09288346850092A5FA /* AppDelegate.swift */; };
 		52661E0E288346850092A5FA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52661E0D288346850092A5FA /* ViewController.swift */; };
 		52661E13288346880092A5FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52661E12288346880092A5FA /* Assets.xcassets */; };
@@ -33,9 +31,6 @@
 /* Begin PBXFileReference section */
 		3FB78E42AF2146BA4795C126 /* Pods_Nectar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nectar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5204A6A9288AE0A500DE4C41 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5204A6AB288AE40B00DE4C41 /* Gilroy-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gilroy-Light.ttf"; path = "../../../../Downloads/gilroy/Gilroy-Light.ttf"; sourceTree = "<group>"; };
-		5204A6AC288AE40B00DE4C41 /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gilroy-Medium.ttf"; path = "../../../../Downloads/gilroy/Gilroy-Medium.ttf"; sourceTree = "<group>"; };
-		5204A6AD288AE40B00DE4C41 /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gilroy-Bold.ttf"; path = "../../../../Downloads/gilroy/Gilroy-Bold.ttf"; sourceTree = "<group>"; };
 		5204A6B1288AEB9A00DE4C41 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5204A6B3288AEBB700DE4C41 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5204A6B5288AFF9E00DE4C41 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -46,6 +41,10 @@
 		5204A6BF288C37BE00DE4C41 /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
 		5204A6C1288C37CC00DE4C41 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		5204A6C3288C4EDF00DE4C41 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		5221D5832896ADDF009177B3 /* ProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionViewCell.swift; sourceTree = "<group>"; };
+		5221D5852896B5D5009177B3 /* Gilroy-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Light.ttf"; sourceTree = "<group>"; };
+		5221D5862896B5D5009177B3 /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
+		5221D5872896B5D5009177B3 /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
 		52661E06288346850092A5FA /* Nectar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nectar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52661E09288346850092A5FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52661E0D288346850092A5FA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,9 +81,9 @@
 		5204A6A4288ADF0E00DE4C41 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
-				5204A6AD288AE40B00DE4C41 /* Gilroy-Bold.ttf */,
-				5204A6AB288AE40B00DE4C41 /* Gilroy-Light.ttf */,
-				5204A6AC288AE40B00DE4C41 /* Gilroy-Medium.ttf */,
+				5221D5872896B5D5009177B3 /* Gilroy-Bold.ttf */,
+				5221D5852896B5D5009177B3 /* Gilroy-Light.ttf */,
+				5221D5862896B5D5009177B3 /* Gilroy-Medium.ttf */,
 			);
 			path = fonts;
 			sourceTree = "<group>";
@@ -144,6 +143,7 @@
 		52661E1E288348C20092A5FA /* views */ = {
 			isa = PBXGroup;
 			children = (
+				5221D5832896ADDF009177B3 /* ProductCollectionViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -241,9 +241,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5204A6AE288AE40B00DE4C41 /* Gilroy-Light.ttf in Resources */,
-				5204A6AF288AE40B00DE4C41 /* Gilroy-Medium.ttf in Resources */,
-				5204A6B0288AE40B00DE4C41 /* Gilroy-Bold.ttf in Resources */,
 				52661E16288346880092A5FA /* LaunchScreen.storyboard in Resources */,
 				52661E13288346880092A5FA /* Assets.xcassets in Resources */,
 			);
@@ -300,6 +297,7 @@
 			files = (
 				5204A6B2288AEB9A00DE4C41 /* LoginViewController.swift in Sources */,
 				5204A6C4288C4EDF00DE4C41 /* ApiManager.swift in Sources */,
+				5221D5842896ADDF009177B3 /* ProductCollectionViewCell.swift in Sources */,
 				5204A6B4288AEBB700DE4C41 /* SignUpViewController.swift in Sources */,
 				5204A6C2288C37CC00DE4C41 /* AccountViewController.swift in Sources */,
 				5204A6BA288C378B00DE4C41 /* ShopViewController.swift in Sources */,
