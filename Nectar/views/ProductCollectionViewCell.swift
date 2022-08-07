@@ -10,28 +10,34 @@ import SwiftUI
 
 class ProductCollectionViewCell: UICollectionViewCell {
     
+    static let identifier = "ProductCollectionViewCell"
+    
     private let productImage:UIImageView = {
        let image = UIImageView(image: UIImage(named: "apple"))
-        image.setDimensions(width: 120, height: 80)
-        image.contentMode = .scaleAspectFill
+        image.contentMode  = .scaleToFill
         return image
     }()
     
     private let productName:UILabel = {
        let label = UILabel()
         label.text = "Banana Test"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
     private let unitDescription:UILabel = {
        let label = UILabel()
         label.text = "7pcs, Priceg"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .gray
         return label
     }()
     
     private let productPrice:UILabel = {
        let label = UILabel()
         label.text = "$4.99"
+        label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     
@@ -64,24 +70,31 @@ class ProductCollectionViewCell: UICollectionViewCell {
         
         addSubview(productName)
         addSubview(productImage)
-        addSubview(addView)
         addSubview(unitDescription)
-        addSubview(productPrice)
-        
-//        contentView.backgroundColor = .red
-        
+
         contentView.layer.cornerRadius = 16
         contentView.layer.borderColor = UIColor(red: 0.886, green: 0.886, blue: 0.886, alpha: 1).cgColor
         contentView.layer.borderWidth = 1
         
-        productImage.anchor(top:contentView.topAnchor,left: contentView.leftAnchor,right: contentView.rightAnchor,paddingTop:8, height: 80)
-        productName.anchor(top:productImage.bottomAnchor,left: contentView.leftAnchor,paddingTop:8, paddingLeft: 16)
+        productImage.anchor(top:contentView.topAnchor,left: contentView.leftAnchor,right: contentView.rightAnchor,paddingTop:8, height: 120)
         
-        unitDescription.anchor(top:productName.bottomAnchor,left: contentView.leftAnchor,paddingTop: 8,paddingLeft: 16)
+        productName.anchor(top:productImage.bottomAnchor,left: contentView.leftAnchor,paddingTop:8, paddingLeft: 8)
         
-        productPrice.anchor(left: contentView.leftAnchor, bottom:contentView.bottomAnchor,paddingLeft: 16, paddingBottom: -24)
+        unitDescription.anchor(top:productName.bottomAnchor,left: contentView.leftAnchor,paddingTop: 4,paddingLeft: 8)
         
-        addView.anchor(bottom:contentView.bottomAnchor, right:contentView.rightAnchor, paddingRight: -16)
+        let stackView = UIStackView(arrangedSubviews: [productPrice,addView])
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        contentView.addSubview(stackView)
+        stackView.anchor(top:unitDescription.bottomAnchor, left: contentView.leftAnchor,right:contentView.rightAnchor,paddingTop: 16,paddingLeft: 8,paddingRight: 8)
+        
+
+    }
+    
+    func setup(product:Product){
+        productName.text = product.name
+        productPrice.text = product.productPrice
+        unitDescription.text = product.unitDescription
     }
     
 }
@@ -95,14 +108,16 @@ struct ProductCollectionViewCellRepresentable:UIViewRepresentable{
     
     func makeUIView(context: Context) -> ProductCollectionViewCell {
         let cell = ProductCollectionViewCell()
-//        cell.contentView.backgroundColor = .blue
+        cell.setup(product: Product(name: "Apple", imageUrl: "", productPrice: "$32.12", unitDescription: "8pcs Per apple"))
         return cell
     }
 }
 
 struct ProductCollectionViewCell_Preview:PreviewProvider{
     static var previews:some View{
-        ProductCollectionViewCellRepresentable()
-            .frame(width: 170, height: 250)
+        Group {
+            ProductCollectionViewCellRepresentable()
+                .frame(width: 170, height: 250)
+        }
     }
 }

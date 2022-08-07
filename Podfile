@@ -4,6 +4,6 @@
 target 'Nectar' do
   
   use_frameworks!
-  pod 'SwiftSVG', '~> 2.0'
+  pod 'SDWebImage', '~> 5.0'
 
 end

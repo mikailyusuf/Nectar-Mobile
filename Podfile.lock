@@ -1,16 +1,18 @@
 PODS:
-  - SwiftSVG (2.3.2)
+  - SDWebImage (5.12.3):
+    - SDWebImage/Core (= 5.12.3)
+  - SDWebImage/Core (5.12.3)
 
 DEPENDENCIES:
-  - SwiftSVG (~> 2.0)
+  - SDWebImage (~> 5.0)
 
 SPEC REPOS:
   trunk:
-    - SwiftSVG
+    - SDWebImage
 
 SPEC CHECKSUMS:
-  SwiftSVG: ca7f64e403b8ea7ea8eba8c823b83ba4a059834c
+  SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
 
-PODFILE CHECKSUM: ad8327bb367a034c440a595f030831fd1fd3b5ba
+PODFILE CHECKSUM: 88d986411f6bca7a4b05665e2f86d4b6432b5137
 
 COCOAPODS: 1.11.3
