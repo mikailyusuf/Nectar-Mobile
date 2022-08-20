@@ -7,88 +7,204 @@
 
 import UIKit
 
-class ShopViewController: UIViewController {
+enum SectionTypes{
+    case exclusive
+    case bestSelling
+    case groceries
     
-    let imageIcon:UIImageView = {
-        let image = UIImageView(image: UIImage(named: "carrot_red"))
-        image.setDimensions(width: 16, height: 16)
-        return image
+    var title:String{
+        switch self {
+        case .exclusive:
+            return "Exclusive"
+        case .bestSelling:
+            return "Best Selling"
+        case .groceries:
+            return "Groceries"
+        }
+    }
+}
+
+class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarDelegate {
+    private var exclusiveOffer:[Product] = []
+    private var bestSelling:[Product] = []
+    private var groceries:[Product] = []
+    
+    
+    var sections = [SectionTypes]()
+        
+    private var collectionView:UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout{sectionIndex,_ -> NSCollectionLayoutSection? in return ShopViewController.createSectionLayout(section: sectionIndex)})
+    
+
+    let searchController:UISearchController = {
+       let results = UIViewController()
+        results.view.backgroundColor = .red
+        let vc = UISearchController(searchResultsController: HomeSearchTableViewController())
+        vc.searchBar.placeholder = "Rice,Beans"
+        vc.searchBar.searchBarStyle = .minimal
+        vc.definesPresentationContext = true
+        return vc
     }()
-    
-    let locationStack:UIStackView = {
-        let stack = UIStackView()
-        stack.spacing = 4
-        return stack
-    }()
-    
-    
-    let locationIcon:UIImageView = {
-        let icon = UIImageView(image: UIImage(systemName: "location"))
-        return icon
-    }()
-    
-    let userLocationLabel:UILabel = {
-        let label = UILabel()
-        label.text = "Dhaka, Banassre"
-        label.font = UIFont(name: Constants.GilroyMedium, size: 16)
-        return label
-    }()
-    
-    let searchBar:UISearchBar = {
-       let searchBar = UISearchBar()
-        searchBar.placeholder = "Search Store"
-        return searchBar
-    }()
-    
-    let headerImageView:UIImageView = {
-        let image = UIImage(named: "banner")
-        let imageView = UIImageView(image: image)
-        return imageView
-    }()
-    
-    let offersStack:UIStackView = {
-       let stackView = UIStackView()
-        stackView.distribution = .fillProportionally
-        stackView.axis = .horizontal
-        return stackView
-    }()
-    
-    let offerLabel:UILabel = {
-       let label = UILabel()
-        label.text = "Exclusive Offer"
-        label.font = UIFont(name: Constants.GilroyBold, size: 24)
-        return label
-    }()
-    
-    let seeAllLabel:UILabel = {
-        let label = UILabel()
-        label.text = "See all"
-        label.textColor = .primaryGreen
-        label.font = UIFont(name: Constants.GilroyMedium, size: 16)
-        return label
-    }()
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(imageIcon)
-        view.addSubview(locationStack)
-        view.addSubview(searchBar)
-        view.addSubview(headerImageView)
+        view.backgroundColor = .systemBackground
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
         
-        imageIcon.centerX(inView: view)
-        imageIcon.anchor(top:view.safeAreaLayoutGuide.topAnchor)
+        configureCollectionView()
+    }
+      
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.frame = view.bounds
+    }
+    
+    private func configureCollectionView(){
+        view.addSubview(collectionView)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(ProductCollectionViewCell.self,forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
+        collectionView.register(HeaderLayoutItem.self,forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderLayoutItem.reuseIdentifier)
+        collectionView.dataSource  = self
+        collectionView.delegate = self
         
-        locationStack.addArrangedSubview(locationIcon)
-        locationStack.addArrangedSubview(userLocationLabel)
-        locationStack.centerX(inView: view)
-        locationStack.anchor(top:imageIcon.bottomAnchor)
+        sections.append(.exclusive)
+        sections.append(.bestSelling)
+        sections.append(.groceries)
+      
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        print("Item search is \(searchBar.text)")
+    }
+
+    func updateSearchResults(for searchController: UISearchController) {
+//        print("Item search is \(searchController.searchBar.text)")
+    }
+    
+    
+    private static func createSectionLayout(section:Int)->NSCollectionLayoutSection{
+        print("Collection view configured")
+        let supplementaryView = [
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)),elementKind: UICollectionView.elementKindSectionHeader,alignment: .top)
+        ]
         
-        searchBar.anchor(top:locationStack.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingLeft: 16,paddingRight: 16)
-        
-        headerImageView.anchor(top:searchBar.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 4,paddingLeft:16, paddingRight:16, height: 120)
-        
-        
+        switch section{
+            
+        case 0:
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0)))
+            
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+            
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(250)), subitem: item,count: 2)
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuous
+            section.boundarySupplementaryItems = supplementaryView
+            return section
+            
+        case 1:
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
+            
+            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8)
+            
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(250)), subitem: item,count: 2)
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuous
+            section.boundarySupplementaryItems = supplementaryView
+            return section
+        case 2:
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
+            
+            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8)
+            
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(250)), subitem: item,count: 2)
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuous
+            section.boundarySupplementaryItems = supplementaryView
+            return section
+            
+        default:
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0 )))
+            
+            
+            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+            //Verical group
+            let vericalgroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .absolute(390)), subitem: item,count: 1)
+            
+            
+            //section
+            let section =  NSCollectionLayoutSection(group: vericalgroup)
+            return section
+        }
     }
     
 }
+
+
+extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let type = sections[section]
+        switch type{
+        case .groceries:
+            return 10
+            
+        case .bestSelling:
+            return 15
+        case .exclusive:
+            return 5
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderLayoutItem.reuseIdentifier, for: indexPath) as? HeaderLayoutItem else{
+            return UICollectionReusableView()
+        }
+        
+        let section = indexPath.section
+        let title = sections[section].title
+        header.setup(headerName: title)
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let type = sections[indexPath.section]
+        switch type{
+        case .exclusive:
+            print("Cell configured for exclusive")
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.setup(product: Product(name: "Apple Pie", imageUrl: "", productPrice: "$123", unitDescription: "Test unit description"))
+            return cell
+            
+        case .bestSelling:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.setup(product: Product(name: "Apple Pie", imageUrl: "", productPrice: "$123", unitDescription: "Test unit description"))
+            return cell
+        case .groceries:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.setup(product: Product(name: "Apple Pie", imageUrl: "", productPrice: "$123", unitDescription: "Test unit description"))
+            return cell
+        }
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return sections.count
+    }
+    
+    
+}
+

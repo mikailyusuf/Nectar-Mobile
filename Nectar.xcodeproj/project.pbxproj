@@ -21,6 +21,8 @@
 		5213A1EE289E910200A5B6BE /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213A1ED289E910200A5B6BE /* Product.swift */; };
 		5213A1F0289E950900A5B6BE /* HeaderLayoutItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213A1EF289E950800A5B6BE /* HeaderLayoutItem.swift */; };
 		5221D5842896ADDF009177B3 /* ProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221D5832896ADDF009177B3 /* ProductCollectionViewCell.swift */; };
+		5230EE8E28B0EC78001CA6F2 /* HomeSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230EE8D28B0EC78001CA6F2 /* HomeSearchTableViewController.swift */; };
+		5230EE9028B101B8001CA6F2 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230EE8F28B101B8001CA6F2 /* ProductDetailViewController.swift */; };
 		52661E0A288346850092A5FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52661E09288346850092A5FA /* AppDelegate.swift */; };
 		52661E0E288346850092A5FA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52661E0D288346850092A5FA /* ViewController.swift */; };
 		52661E13288346880092A5FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52661E12288346880092A5FA /* Assets.xcassets */; };
@@ -49,6 +51,8 @@
 		5221D5852896B5D5009177B3 /* Gilroy-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Light.ttf"; sourceTree = "<group>"; };
 		5221D5862896B5D5009177B3 /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
 		5221D5872896B5D5009177B3 /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		5230EE8D28B0EC78001CA6F2 /* HomeSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchTableViewController.swift; sourceTree = "<group>"; };
+		5230EE8F28B101B8001CA6F2 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		52661E06288346850092A5FA /* Nectar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nectar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52661E09288346850092A5FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52661E0D288346850092A5FA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 				5204A6BD288C37AB00DE4C41 /* CartViewController.swift */,
 				5204A6BF288C37BE00DE4C41 /* FavouriteViewController.swift */,
 				5204A6C1288C37CC00DE4C41 /* AccountViewController.swift */,
+				5230EE8D28B0EC78001CA6F2 /* HomeSearchTableViewController.swift */,
+				5230EE8F28B101B8001CA6F2 /* ProductDetailViewController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -312,6 +318,7 @@
 				5204A6B2288AEB9A00DE4C41 /* LoginViewController.swift in Sources */,
 				5204A6C4288C4EDF00DE4C41 /* ApiManager.swift in Sources */,
 				5221D5842896ADDF009177B3 /* ProductCollectionViewCell.swift in Sources */,
+				5230EE8E28B0EC78001CA6F2 /* HomeSearchTableViewController.swift in Sources */,
 				5204A6B4288AEBB700DE4C41 /* SignUpViewController.swift in Sources */,
 				5204A6C2288C37CC00DE4C41 /* AccountViewController.swift in Sources */,
 				5213A1EE289E910200A5B6BE /* Product.swift in Sources */,
@@ -325,6 +332,7 @@
 				5204A6C0288C37BE00DE4C41 /* FavouriteViewController.swift in Sources */,
 				52661E0A288346850092A5FA /* AppDelegate.swift in Sources */,
 				5204A6B6288AFF9E00DE4C41 /* Utilities.swift in Sources */,
+				5230EE9028B101B8001CA6F2 /* ProductDetailViewController.swift in Sources */,
 				5204A6BC288C379B00DE4C41 /* ExploreViewController.swift in Sources */,
 				52661E27288349930092A5FA /* Extensions.swift in Sources */,
 			);

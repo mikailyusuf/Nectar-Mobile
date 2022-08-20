@@ -95,5 +95,9 @@ extension UIColor {
     static let primaryGreen = UIColor.rgb(red: 83, green: 177, blue: 117)
     static let grayWhite = UIColor.rgb(red: 252, green: 252, blue: 252)
     static let secondaryTextColor = UIColor.rgb(red: 124, green: 124, blue: 124)
+    
+    static let blackTextColor = UIColor.rgb(red: 24, green: 23, blue: 37)
+    static let grayTextColor = UIColor.rgb(red:124,green:124,blue:124)
+    
 }
 
