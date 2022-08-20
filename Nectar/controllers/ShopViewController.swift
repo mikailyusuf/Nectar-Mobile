@@ -69,7 +69,7 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
         collectionView.register(HeaderLayoutItem.self,forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderLayoutItem.reuseIdentifier)
         collectionView.dataSource  = self
         collectionView.delegate = self
-        
+            
         sections.append(.exclusive)
         sections.append(.bestSelling)
         sections.append(.groceries)

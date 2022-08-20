@@ -14,6 +14,8 @@ class HomeSearchTableViewController: UITableViewController {
     
      override func viewDidLoad() {
          super.viewDidLoad()
+         
+         view.backgroundColor = .red
          self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.CELLID)
      }
      override func numberOfSections(in tableView: UITableView) -> Int {
