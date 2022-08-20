@@ -86,7 +86,7 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
     
     
     private static func createSectionLayout(section:Int)->NSCollectionLayoutSection{
-        print("Collection view configured")
+      
         let supplementaryView = [
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)),elementKind: UICollectionView.elementKindSectionHeader,alignment: .top)
         ]
@@ -162,6 +162,11 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let vc =  UINavigationController(rootViewController: ProductDetailViewController())
+        vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+//        navigationController?.pushViewController(vc, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -179,7 +184,7 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
         let type = sections[indexPath.section]
         switch type{
         case .exclusive:
-            print("Cell configured for exclusive")
+         
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
                 return UICollectionViewCell()
             }

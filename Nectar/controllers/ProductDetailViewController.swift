@@ -111,11 +111,15 @@ class ProductDetailViewController: UIViewController {
  
     let arrowRight1:UIImageView = {
         let image = UIImageView(image: UIImage(named: "arrow_right"))
+        image.setDimensions(width: 8, height: 8)
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
     let arrowRight2:UIImageView = {
         let image = UIImageView(image: UIImage(named: "arrow_right"))
+        image.setDimensions(width: 8, height: 8)
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
@@ -219,17 +223,40 @@ class ProductDetailViewController: UIViewController {
         return stack
     }()
     
+    let addToBasketBtn:UIButton = {
+        let button = Utilities().button(withLabel: "Add To Basket")
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"),
+                                                            style: .done, target: self, action: #selector(didTapRight))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image:UIImage(systemName: "arrow.left"),
+                                                            style: .done, target: self, action: #selector(didTapRight))
+        
         setupViews()
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func didTapRight(){
+        
+    }
+    
+    @objc func didTapBack(){
+        
     }
 
     
     private func setupViews(){
         view.addSubview(productImage)
-        productImage.anchor(top:view.topAnchor,left: view.leftAnchor,right: view.rightAnchor,height: 300)
+        
+
+        
+        productImage.anchor(top:view.topAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 30,height: 300)
         view.addSubview(stackUnitDescription)
         stackUnitDescription.anchor(top:productImage.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16)
         
@@ -244,8 +271,18 @@ class ProductDetailViewController: UIViewController {
         
         view.addSubview(lineView2)
         lineView2.anchor(top:detailStackView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 0.5)
+        view.addSubview(nutritionStack)
+        nutritionStack.anchor(top:lineView2.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16,height: 30)
         
-        nutritionStack.anchor(top:lineView2.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingLeft: 16,paddingRight: 16)
+        view.addSubview(lineView3)
+        lineView3.anchor(top:nutritionStack.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 0.5)
+        
+        view.addSubview(reviewStack)
+        reviewStack.anchor(top:lineView3.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16,height: 30)
+        
+        view.addSubview(addToBasketBtn)
+        addToBasketBtn.anchor(top:reviewStack.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 67)
+        
     }
     
     
