@@ -1,18 +1,22 @@
 PODS:
+  - RandomColorSwift (2.0.0)
   - SDWebImage (5.12.3):
     - SDWebImage/Core (= 5.12.3)
   - SDWebImage/Core (5.12.3)
 
 DEPENDENCIES:
+  - RandomColorSwift
   - SDWebImage (~> 5.0)
 
 SPEC REPOS:
   trunk:
+    - RandomColorSwift
     - SDWebImage
 
 SPEC CHECKSUMS:
+  RandomColorSwift: d18b9b025403137b5543a002187489b06cc1782b
   SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
 
-PODFILE CHECKSUM: 88d986411f6bca7a4b05665e2f86d4b6432b5137
+PODFILE CHECKSUM: 95cef249963d4f3b6c8c4751338725e9121292cd
 
 COCOAPODS: 1.11.3

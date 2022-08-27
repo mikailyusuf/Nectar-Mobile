@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import RandomColorSwift
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     
@@ -34,9 +35,12 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        let color = randomColor()
+        
         layer.borderWidth = 2
         layer.cornerRadius = LayoutConstant.padding
-        layer.borderColor = Color.red.cgColor
+        layer.borderColor = color.cgColor
+        layer.backgroundColor = color.cgColor.copy(alpha: 0.1)
         setupViews()
     }
     
@@ -46,7 +50,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         addSubview(categoryImage)
         addSubview(categoryName)
         
-        categoryImage.anchor(top:topAnchor,left: leftAnchor,right:rightAnchor,paddingTop: LayoutConstant.padding,paddingLeft: LayoutConstant.padding,paddingRight: LayoutConstant.padding)
+        categoryImage.anchor(top:topAnchor,left: leftAnchor,right:rightAnchor,paddingTop: LayoutConstant.padding,paddingLeft: LayoutConstant.padding,paddingRight: LayoutConstant.padding,height: 80)
         
         categoryName.anchor(top:categoryImage.bottomAnchor, paddingTop: LayoutConstant.padding)
         categoryName.centerX(inView: self)
@@ -81,7 +85,7 @@ struct CategoryCollectionViewCell_Preview:PreviewProvider{
     static var previews:some View{
         Group {
             CategoryCollectionViewCellRepresentable()
-                .frame(width: 200, height: 220)
+                .frame(width: 200, height: 180)
         }
     }
 }

@@ -39,4 +39,27 @@ class Utilities{
         button.setTitleColor(UIColor.white, for: .normal)
         return button
     }
+    
+    func roundedView(withImage image:UIImageView)->UIView{
+        
+        let view = UIView()
+        view.addSubview(image)
+        image.centerY(inView: view)
+        image.centerX(inView: view)
+        view.layer.borderWidth =  0.2
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.cornerRadius = 12
+        view.setDimensions(width: 40, height: 40)
+        
+        return view
+    }
+    
+    func defaultCollection()->UICollectionView {
+        let viewLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
+        collectionView.backgroundColor = UIColor.white
+        return collectionView
+    
+    }
 }
+
