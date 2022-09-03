@@ -28,10 +28,14 @@ class AccountViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(collectionView)
         collectionView.frame = view.frame
-        collectionView.dataSource = self
-        collectionView.delegate = self
+      
+      
+        collectionView.register(AccountHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AccountHeaderCollectionReusableView.identifier)
+        collectionView.register(AccountFooterCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AccountFooterCollectionReusableView.identifier)
         collectionView.register(AccountCollectionViewCell.self, forCellWithReuseIdentifier: AccountCollectionViewCell.identifier)
         
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
     }
     
@@ -41,7 +45,7 @@ class AccountViewController: UIViewController {
 
 extension AccountViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        8
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -53,6 +57,20 @@ extension AccountViewController:UICollectionViewDelegate,UICollectionViewDataSou
             return UICollectionViewCell()
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind{
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AccountHeaderCollectionReusableView.identifier, for: indexPath) as! AccountHeaderCollectionReusableView
+            return header
+            
+        case UICollectionView.elementKindSectionFooter:
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AccountFooterCollectionReusableView.identifier, for: indexPath) as! AccountFooterCollectionReusableView
+            return footer
+        default:
+            assert(false, "Unexpected element kind")
+        }
     }
 }
 
@@ -75,5 +93,11 @@ extension AccountViewController:UICollectionViewDelegateFlowLayout{
         return LayoutConstant.spacing
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+            return CGSize(width: collectionView.frame.width, height: 100.0)
+    }
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+            return CGSize(width: collectionView.frame.width, height: 60.0)
+    }
 }
 
