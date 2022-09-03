@@ -23,6 +23,10 @@
 		5221D5842896ADDF009177B3 /* ProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221D5832896ADDF009177B3 /* ProductCollectionViewCell.swift */; };
 		5230EE8E28B0EC78001CA6F2 /* HomeSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230EE8D28B0EC78001CA6F2 /* HomeSearchTableViewController.swift */; };
 		5230EE9028B101B8001CA6F2 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5230EE8F28B101B8001CA6F2 /* ProductDetailViewController.swift */; };
+		5258857A28C39EF8002FAC72 /* AuthApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258857928C39EF8002FAC72 /* AuthApiManager.swift */; };
+		5258857C28C39FE1002FAC72 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258857B28C39FE1002FAC72 /* User.swift */; };
+		5258857E28C3A06C002FAC72 /* CreateUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258857D28C3A06C002FAC72 /* CreateUserResponse.swift */; };
+		5258858028C3B4B0002FAC72 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258857F28C3B4B0002FAC72 /* SpinnerViewController.swift */; };
 		52661E0A288346850092A5FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52661E09288346850092A5FA /* AppDelegate.swift */; };
 		52661E13288346880092A5FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52661E12288346880092A5FA /* Assets.xcassets */; };
 		52661E16288346880092A5FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52661E14288346880092A5FA /* LaunchScreen.storyboard */; };
@@ -59,6 +63,10 @@
 		5221D5872896B5D5009177B3 /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
 		5230EE8D28B0EC78001CA6F2 /* HomeSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchTableViewController.swift; sourceTree = "<group>"; };
 		5230EE8F28B101B8001CA6F2 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
+		5258857928C39EF8002FAC72 /* AuthApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiManager.swift; sourceTree = "<group>"; };
+		5258857B28C39FE1002FAC72 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5258857D28C3A06C002FAC72 /* CreateUserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserResponse.swift; sourceTree = "<group>"; };
+		5258857F28C3B4B0002FAC72 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		52661E06288346850092A5FA /* Nectar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nectar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52661E09288346850092A5FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52661E12288346880092A5FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				5213A1ED289E910200A5B6BE /* Product.swift */,
+				5258857B28C39FE1002FAC72 /* User.swift */,
+				5258857D28C3A06C002FAC72 /* CreateUserResponse.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -182,6 +192,7 @@
 				52F5C52628BA777D00731327 /* AccountCollectionViewCell.swift */,
 				52F5C52828BC06E800731327 /* AccountHeaderCollectionReusableView.swift */,
 				52F5C52A28BC0BCD00731327 /* AccountFooterCollectionReusableView.swift */,
+				5258857F28C3B4B0002FAC72 /* SpinnerViewController.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -190,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				5204A6C3288C4EDF00DE4C41 /* ApiManager.swift */,
+				5258857928C39EF8002FAC72 /* AuthApiManager.swift */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -337,6 +349,7 @@
 				5275E6D228B24486007339C2 /* CartCollectionViewCell.swift in Sources */,
 				5204A6C4288C4EDF00DE4C41 /* ApiManager.swift in Sources */,
 				5275E6D028B23B12007339C2 /* CategoryTypeViewController.swift in Sources */,
+				5258858028C3B4B0002FAC72 /* SpinnerViewController.swift in Sources */,
 				5221D5842896ADDF009177B3 /* ProductCollectionViewCell.swift in Sources */,
 				5230EE8E28B0EC78001CA6F2 /* HomeSearchTableViewController.swift in Sources */,
 				5204A6B4288AEBB700DE4C41 /* SignUpViewController.swift in Sources */,
@@ -353,10 +366,13 @@
 				52661E232883491B0092A5FA /* OnboardingViewController.swift in Sources */,
 				5204A6B8288C375600DE4C41 /* HomeViewController.swift in Sources */,
 				5204A6C0288C37BE00DE4C41 /* FavouriteViewController.swift in Sources */,
+				5258857C28C39FE1002FAC72 /* User.swift in Sources */,
 				52661E0A288346850092A5FA /* AppDelegate.swift in Sources */,
 				5204A6B6288AFF9E00DE4C41 /* Utilities.swift in Sources */,
+				5258857A28C39EF8002FAC72 /* AuthApiManager.swift in Sources */,
 				5230EE9028B101B8001CA6F2 /* ProductDetailViewController.swift in Sources */,
 				5204A6BC288C379B00DE4C41 /* ExploreViewController.swift in Sources */,
+				5258857E28C3A06C002FAC72 /* CreateUserResponse.swift in Sources */,
 				5282512E28B15C71005AA093 /* CategoryCollectionViewCell.swift in Sources */,
 				52661E27288349930092A5FA /* Extensions.swift in Sources */,
 			);

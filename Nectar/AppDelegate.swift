@@ -16,7 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = OnboardingViewController()
+        var vc:UIViewController
+        if(ApiManager.shared.accessToken == ""){
+         vc = UINavigationController(rootViewController:LoginViewController())
+        }else{
+            vc = HomeViewController()
+        }
+        window?.rootViewController = vc
         return true
     }
     

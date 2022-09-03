@@ -8,7 +8,7 @@
 import UIKit
 
 class SignUpViewController: UIViewController {
-
+  
     let iconView:UIImageView = {
         let view = UIImageView(image: UIImage(named: "carrot_red"))
         view.setDimensions(width: 48, height: 56)
@@ -57,6 +57,11 @@ class SignUpViewController: UIViewController {
         return textField
     }()
     
+    var phoneNumberTextField:UITextField = {
+        let textField = Utilities().textInputField()
+        return textField
+    }()
+    
     lazy var usernameContainerView:UIView = {
         let view = Utilities().inputContainerView(with: "Username", textInputField: usernameTextField)
         return view
@@ -64,6 +69,12 @@ class SignUpViewController: UIViewController {
     
     lazy var emailContainerView:UIView = {
         let view = Utilities().inputContainerView(with: "Email", textInputField: emailTextField)
+        return view
+    }()
+    
+    
+    lazy var phoneNumberContainerView:UIView = {
+        let view = Utilities().inputContainerView(with: "Phone Number", textInputField: phoneNumberTextField)
         return view
     }()
     
@@ -111,7 +122,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+  
         view.addSubview(iconView)
         view.addSubview(signupLabelText)
         view.addSubview(credentialsInfoText)
@@ -123,13 +134,14 @@ class SignUpViewController: UIViewController {
         iconView.centerX(inView: view)
         iconView.anchor(top:view.topAnchor,paddingTop: 88)
         
-        signupLabelText.anchor(top:iconView.bottomAnchor, left:view.leftAnchor,paddingTop:100, paddingLeft: 16)
+        signupLabelText.anchor(top:iconView.bottomAnchor, left:view.leftAnchor,paddingTop:60, paddingLeft: 16)
         
         credentialsInfoText.anchor(top:signupLabelText.bottomAnchor,left: view.leftAnchor,paddingTop:15, paddingLeft: 16)
 
         
         inputStackView.addArrangedSubview(usernameContainerView)
         inputStackView.addArrangedSubview(emailContainerView)
+        inputStackView.addArrangedSubview(phoneNumberContainerView)
         inputStackView.addArrangedSubview(passwordContainerView)
         
         inputStackView.anchor(top:credentialsInfoText.bottomAnchor, left:view.leftAnchor,right: view.rightAnchor,paddingTop:24, paddingLeft:16, paddingRight:16)
@@ -143,12 +155,58 @@ class SignUpViewController: UIViewController {
         
         loginLabelStackView.centerX(inView: view)
         loginLabelStackView.anchor(top:buttonSigup.bottomAnchor,paddingTop: 16)
+        
     }
     
 //MARK: selectors
     
     @objc func handleSignup(){
         
+        guard let email = emailTextField.text else {return}
+        guard let username = usernameTextField.text else {return}
+        guard let phoneNumber = phoneNumberTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        
+        let user = User(email: email, username: username, phoneNumber: phoneNumber, password: password)
+        showProgress()
+        DispatchQueue.main.async {
+            AuthApiManager.shared.createUser(with: user) { [weak self] result  in
+                switch result{
+                case .success(let model):
+               
+                    let vc = UINavigationController(rootViewController: HomeViewController())
+                    self?.present(vc, animated: false, completion:nil)
+                    print("User token == \(model.token)")
+                    self?.hideProgress()
+                    
+                case .failure( _):
+                    self?.hideProgress()
+                    print("An error occured")
+                }
+                
+           
+            }
+        }
+    
+    }
+    
+    let spinner = SpinnerViewController()
+    
+    func showProgress() {
+        addChild(spinner)
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
+    
+    }
+    
+    
+    func hideProgress(){
+        DispatchQueue.main.async{
+            self.spinner.willMove(toParent: nil)
+            self.spinner.view.removeFromSuperview()
+            self.spinner.removeFromParent()
+        }
     }
 
 

@@ -74,7 +74,7 @@ class OnboardingViewController: UIViewController {
     //MARK: Selectors
     
     @objc func handleGetStartetd(){
-        let vc = HomeViewController()
+        let vc = LoginViewController()
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
 

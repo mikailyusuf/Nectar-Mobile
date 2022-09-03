@@ -81,6 +81,7 @@ class LoginViewController: UIViewController {
         label.text = "Don't have an acount?"
         label.textColor = .black
         label.font = UIFont(name: Constants.GilroyMedium, size: 16)
+        
         return label
     }()
     
@@ -134,11 +135,19 @@ class LoginViewController: UIViewController {
         signUpLabelStackView.centerX(inView: view)
         signUpLabelStackView.anchor(top:buttonLogin.bottomAnchor,paddingTop: 16)
         
+        let labelTap = UITapGestureRecognizer(target: self, action: #selector(handleCreateAccountTapped))
+        signUpLabelStackView.isUserInteractionEnabled = true
+        signUpLabelStackView.addGestureRecognizer(labelTap)
+        
     }
     
     //MARK: Selectors
     @objc func handleLogin(){
         print("Log in clicked")
+    }
+    
+    @objc func handleCreateAccountTapped(){
+        navigationController?.pushViewController(SignUpViewController(), animated: false)
     }
     
 }
