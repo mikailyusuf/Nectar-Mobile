@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import SDWebImage
 
 class ProductCollectionViewCell: UICollectionViewCell {
     
@@ -14,13 +15,17 @@ class ProductCollectionViewCell: UICollectionViewCell {
     
     private let productImage:UIImageView = {
        let image = UIImageView(image: UIImage(named: "apple"))
-        image.contentMode  = .scaleToFill
+        image.contentMode  = .scaleAspectFill
+        image.layer.cornerRadius = 16
+        image.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        image.clipsToBounds = true
         return image
     }()
     
     private let productName:UILabel = {
        let label = UILabel()
         label.text = "Banana Test"
+        label.numberOfLines = 0
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
@@ -76,11 +81,11 @@ class ProductCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderColor = UIColor(red: 0.886, green: 0.886, blue: 0.886, alpha: 1).cgColor
         contentView.layer.borderWidth = 1
         
-        productImage.anchor(top:contentView.topAnchor,left: contentView.leftAnchor,right: contentView.rightAnchor,paddingTop:8, height: 120)
+        productImage.anchor(top:contentView.topAnchor,left: contentView.leftAnchor,right: contentView.rightAnchor, height: 120)
         
-        productName.anchor(top:productImage.bottomAnchor,left: contentView.leftAnchor,paddingTop:8, paddingLeft: 8)
+        productName.anchor(top:productImage.bottomAnchor,left: contentView.leftAnchor,right:contentView.rightAnchor,paddingTop:8, paddingLeft: 8,paddingRight: 8)
         
-        unitDescription.anchor(top:productName.bottomAnchor,left: contentView.leftAnchor,paddingTop: 4,paddingLeft: 8)
+        unitDescription.anchor(top:productName.bottomAnchor,left: contentView.leftAnchor,right: contentView.rightAnchor,paddingTop: 4,paddingLeft: 8,paddingRight: 8)
         
         let stackView = UIStackView(arrangedSubviews: [productPrice,addView])
         stackView.axis = .horizontal
@@ -93,31 +98,32 @@ class ProductCollectionViewCell: UICollectionViewCell {
     
     func setup(product:Product){
         productName.text = product.name
-        productPrice.text = product.productPrice
-        unitDescription.text = product.unitDescription
+        productPrice.text = "\(product.price)"
+        unitDescription.text = product.description
+        productImage.sd_setImage(with: URL(string: product.image), completed: nil)
     }
     
 }
 
 
-struct ProductCollectionViewCellRepresentable:UIViewRepresentable{
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
-    
-    func makeUIView(context: Context) -> ProductCollectionViewCell {
-        let cell = ProductCollectionViewCell()
-        cell.setup(product: Product(name: "Apple", imageUrl: "", productPrice: "$32.12", unitDescription: "8pcs Per apple"))
-        return cell
-    }
-}
-
-struct ProductCollectionViewCell_Preview:PreviewProvider{
-    static var previews:some View{
-        Group {
-            ProductCollectionViewCellRepresentable()
-                .frame(width: 170, height: 250)
-        }
-    }
-}
+//struct ProductCollectionViewCellRepresentable:UIViewRepresentable{
+//
+//    func updateUIView(_ uiView: UIViewType, context: Context) {
+//
+//    }
+//
+//    func makeUIView(context: Context) -> ProductCollectionViewCell {
+//        let cell = ProductCollectionViewCell()
+//        cell.setup(product: Product(name: "Apple", imageUrl: "", productPrice: "$32.12", unitDescription: "8pcs Per apple"))
+//        return cell
+//    }
+//}
+//
+//struct ProductCollectionViewCell_Preview:PreviewProvider{
+//    static var previews:some View{
+//        Group {
+//            ProductCollectionViewCellRepresentable()
+//                .frame(width: 170, height: 250)
+//        }
+//    }
+//}

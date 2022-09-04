@@ -77,7 +77,7 @@ extension CategoryTypeViewController:UICollectionViewDelegate,UICollectionViewDa
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.setup(product: Product(name: "Coke", imageUrl: "DFG", productPrice: "1200", unitDescription: "2L, Price"))
+        cell.setup(product: Product(id: "1", description: "test", name: "name", price: 234, categorie: "categorie", image: "image", available_quantity: 12, unit_description: "description", is_available: true))
         return cell
     }
 }

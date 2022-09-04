@@ -16,7 +16,7 @@ struct ApiManager{
         var request = URLRequest(url: apiUrl)
         request.httpMethod = type.rawValue
         request.timeoutInterval = 60
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorisation")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "token")
         completion(request)
     }
 

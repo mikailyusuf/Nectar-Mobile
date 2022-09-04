@@ -143,7 +143,30 @@ class LoginViewController: UIViewController {
     
     //MARK: Selectors
     @objc func handleLogin(){
-        print("Log in clicked")
+        guard let email = emailTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        
+        DispatchQueue.main.async {
+            AuthApiManager.shared.loginUser(email: email, password: password) { result in
+                switch result{
+                case .success(let model):
+                    print("Success \(model)")
+                    self.presentHomeScreen()
+                case .failure(_):
+                    print("Error with login")
+                }
+            }
+        }
+      
+    }
+    
+    
+    func presentHomeScreen(){
+        DispatchQueue.main.async {
+            let vc = UINavigationController(rootViewController: HomeViewController())
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false, completion:nil)
+        }
     }
     
     @objc func handleCreateAccountTapped(){

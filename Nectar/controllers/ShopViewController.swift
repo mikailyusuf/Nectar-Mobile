@@ -6,33 +6,34 @@
 //
 
 import UIKit
+import SwiftUI
 
 enum SectionTypes{
-    case exclusive
+    case latest
     case bestSelling
-    case groceries
+    case electronics
     
     var title:String{
         switch self {
-        case .exclusive:
-            return "Exclusive"
+        case .latest:
+            return "Latest"
         case .bestSelling:
             return "Best Selling"
-        case .groceries:
-            return "Groceries"
+        case .electronics:
+            return "Electronics"
         }
     }
 }
 
 class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarDelegate {
-    private var exclusiveOffer:[Product] = []
-    private var bestSelling:[Product] = []
-    private var groceries:[Product] = []
-    
-    
+  
     var sections = [SectionTypes]()
         
     private var collectionView:UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout{sectionIndex,_ -> NSCollectionLayoutSection? in return ShopViewController.createSectionLayout(section: sectionIndex)})
+    
+    private var latest:[Product] = []
+    private var bestSelling:[Product] = []
+    private var electronics:[Product] = []
     
 
     let searchController:UISearchController = {
@@ -44,6 +45,8 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
         vc.definesPresentationContext = true
         return vc
     }()
+    
+
 
 
     override func viewDidLoad() {
@@ -55,6 +58,7 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
         navigationItem.searchController = searchController
         
         configureCollectionView()
+        getProducts()
     }
       
     override func viewDidLayoutSubviews() {
@@ -70,12 +74,36 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
         collectionView.dataSource  = self
         collectionView.delegate = self
             
-        sections.append(.exclusive)
+        sections.append(.latest)
         sections.append(.bestSelling)
-        sections.append(.groceries)
+        sections.append(.electronics)
+        
       
     }
     
+    
+    //MARK: API
+    func getProducts(){
+        DispatchQueue.main.async {
+            ProductApiManager.shared.getProducts { result in
+                switch result{
+                    
+                case .success(let model):
+                    self.latest = model.latest
+                    self.bestSelling = model.best_selling
+                    self.electronics = model.electronics
+                   
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                case .failure(_):
+                 
+                    print("Error in getting products")
+                }
+            }
+        }
+      
+    }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 //        print("Item search is \(searchBar.text)")
     }
@@ -150,23 +178,33 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let type = sections[section]
         switch type{
-        case .groceries:
-            return 10
+        case .latest:
+            return latest.count
             
         case .bestSelling:
-            return 15
-        case .exclusive:
-            return 5
+            return bestSelling.count
+        case .electronics:
+            return electronics.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        let vc =  UINavigationController(rootViewController: ProductDetailViewController())
-        vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-//        navigationController?.pushViewController(vc, animated: true)
+        var product:Product!
+        switch indexPath.section{
+        case 0:
+            product = latest[indexPath.row]
+        case 1:
+            product = bestSelling[indexPath.row]
+        case 2:
+            product = electronics[indexPath.row]
+        default:
+            print("nothing")
+        }
+        let vc = ProductDetailViewController()
+        vc.product = product
+        navigationController?.pushViewController(vc, animated: false)
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -183,25 +221,29 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let type = sections[indexPath.section]
         switch type{
-        case .exclusive:
+        case .latest:
          
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.setup(product: Product(name: "Apple Pie", imageUrl: "", productPrice: "$123", unitDescription: "Test unit description"))
+            let item = latest[indexPath.row]
+            cell.setup(product: item)
             return cell
             
         case .bestSelling:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.setup(product: Product(name: "Apple Pie", imageUrl: "", productPrice: "$123", unitDescription: "Test unit description"))
+            let item = bestSelling[indexPath.row]
+            cell.setup(product: item)
+
             return cell
-        case .groceries:
+        case .electronics:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.setup(product: Product(name: "Apple Pie", imageUrl: "", productPrice: "$123", unitDescription: "Test unit description"))
+            let item = electronics[indexPath.row]
+            cell.setup(product: item)
             return cell
         }
     }

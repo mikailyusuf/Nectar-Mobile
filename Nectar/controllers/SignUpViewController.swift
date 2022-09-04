@@ -173,10 +173,7 @@ class SignUpViewController: UIViewController {
             AuthApiManager.shared.createUser(with: user) { [weak self] result  in
                 switch result{
                 case .success(let model):
-               
-                    let vc = UINavigationController(rootViewController: HomeViewController())
-                    self?.present(vc, animated: false, completion:nil)
-                    print("User token == \(model.token)")
+                    self?.presentHomeScreen()
                     self?.hideProgress()
                     
                 case .failure( _):
@@ -188,6 +185,14 @@ class SignUpViewController: UIViewController {
             }
         }
     
+    }
+    
+    func presentHomeScreen(){
+        DispatchQueue.main.async {
+            let vc = UINavigationController(rootViewController: HomeViewController())
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false, completion:nil)
+        }
     }
     
     let spinner = SpinnerViewController()

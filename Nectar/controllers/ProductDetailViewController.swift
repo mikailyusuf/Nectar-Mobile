@@ -10,9 +10,11 @@ import SwiftUI
 
 class ProductDetailViewController: UIViewController {
     
+    var product:Product!
+    
     let productImage:UIImageView = {
         let image = UIImageView(image: UIImage(named: "apple"))
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
@@ -183,7 +185,7 @@ class ProductDetailViewController: UIViewController {
         return label
     }()
     
-    
+ 
     private lazy var detailStackView:UIStackView = {
        let stack = UIStackView(arrangedSubviews: [detailLabel,productDetailText])
         stack.axis = .vertical
@@ -236,10 +238,9 @@ class ProductDetailViewController: UIViewController {
                                                             style: .done, target: self, action: #selector(didTapRight))
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image:UIImage(systemName: "arrow.left"),
-                                                            style: .done, target: self, action: #selector(didTapRight))
-        
+                                                            style: .done, target: self, action: #selector(didTapBack))
         setupViews()
-        // Do any additional setup after loading the view.
+        setData()
     }
     
     @objc func didTapRight(){
@@ -247,16 +248,26 @@ class ProductDetailViewController: UIViewController {
     }
     
     @objc func didTapBack(){
-        
+        print("back presses")
+        navigationController?.popViewController(animated: true)
     }
 
+    
+    func setData(){
+        guard let product = product else {return}
+    
+        productImage.sd_setImage(with: URL(string: product.image), completed: nil)
+        detailLabel.text = product.description
+        productNameText.text = product.name
+        productPrice.text = "\(product.price)"
+    }
     
     private func setupViews(){
         view.addSubview(productImage)
         
 
         
-        productImage.anchor(top:view.topAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 30,height: 300)
+        productImage.anchor(top:view.topAnchor,left: view.leftAnchor,right: view.rightAnchor,height: 300)
         view.addSubview(stackUnitDescription)
         stackUnitDescription.anchor(top:productImage.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16)
         
@@ -284,6 +295,8 @@ class ProductDetailViewController: UIViewController {
         addToBasketBtn.anchor(top:reviewStack.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 67)
         
     }
+    
+ 
     
     
 }

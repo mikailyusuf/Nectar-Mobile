@@ -16,10 +16,8 @@ class AccountViewController: UIViewController {
         static let itemHeight: CGFloat = 50.0
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .systemBackground
         setupViews()
     }

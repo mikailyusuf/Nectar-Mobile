@@ -25,9 +25,34 @@ struct AuthApiManager{
                 }
                 do{
                     let result = try JSONDecoder().decode(CreateUserResponse.self, from: data)
-                    print("Success \(result)")
                     completion(.success(result))
-                    print("Completion was successful \(result)")
+                    ApiManager.shared.accessToken = result.token
+                }
+                catch{
+                    completion(.failure(error))
+                    print("An error occured with the request \(error)")
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    
+    public func loginUser(email:String,password:String,completion:@escaping (Result<LoginResponse,Error>) -> Void){
+        
+        ApiManager.shared.createRequest(with: URL(string: Constants.BASE_URL + "api/auth/login"), type: .POST) { baseResquest in
+            
+            var request = baseResquest
+            let json:[String:String] = ["email":email,"password":password]
+            request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else{
+                    return
+                }
+                do{
+                    let result = try JSONDecoder().decode(LoginResponse.self, from: data)
+                    completion(.success(result))
                     ApiManager.shared.accessToken = result.token
                 }
                 catch{

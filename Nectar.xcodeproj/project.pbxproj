@@ -27,6 +27,9 @@
 		5258857C28C39FE1002FAC72 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258857B28C39FE1002FAC72 /* User.swift */; };
 		5258857E28C3A06C002FAC72 /* CreateUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258857D28C3A06C002FAC72 /* CreateUserResponse.swift */; };
 		5258858028C3B4B0002FAC72 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258857F28C3B4B0002FAC72 /* SpinnerViewController.swift */; };
+		5258858228C3DD8A002FAC72 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258858128C3DD8A002FAC72 /* LoginResponse.swift */; };
+		5258858428C5148C002FAC72 /* ProductApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258858328C5148C002FAC72 /* ProductApiManager.swift */; };
+		5258858628C514EF002FAC72 /* GetProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5258858528C514EF002FAC72 /* GetProductResponse.swift */; };
 		52661E0A288346850092A5FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52661E09288346850092A5FA /* AppDelegate.swift */; };
 		52661E13288346880092A5FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52661E12288346880092A5FA /* Assets.xcassets */; };
 		52661E16288346880092A5FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52661E14288346880092A5FA /* LaunchScreen.storyboard */; };
@@ -67,6 +70,9 @@
 		5258857B28C39FE1002FAC72 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5258857D28C3A06C002FAC72 /* CreateUserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserResponse.swift; sourceTree = "<group>"; };
 		5258857F28C3B4B0002FAC72 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
+		5258858128C3DD8A002FAC72 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		5258858328C5148C002FAC72 /* ProductApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductApiManager.swift; sourceTree = "<group>"; };
+		5258858528C514EF002FAC72 /* GetProductResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProductResponse.swift; sourceTree = "<group>"; };
 		52661E06288346850092A5FA /* Nectar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nectar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52661E09288346850092A5FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52661E12288346880092A5FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -122,6 +128,8 @@
 				5213A1ED289E910200A5B6BE /* Product.swift */,
 				5258857B28C39FE1002FAC72 /* User.swift */,
 				5258857D28C3A06C002FAC72 /* CreateUserResponse.swift */,
+				5258858128C3DD8A002FAC72 /* LoginResponse.swift */,
+				5258858528C514EF002FAC72 /* GetProductResponse.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -202,6 +210,7 @@
 			children = (
 				5204A6C3288C4EDF00DE4C41 /* ApiManager.swift */,
 				5258857928C39EF8002FAC72 /* AuthApiManager.swift */,
+				5258858328C5148C002FAC72 /* ProductApiManager.swift */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -353,6 +362,8 @@
 				5221D5842896ADDF009177B3 /* ProductCollectionViewCell.swift in Sources */,
 				5230EE8E28B0EC78001CA6F2 /* HomeSearchTableViewController.swift in Sources */,
 				5204A6B4288AEBB700DE4C41 /* SignUpViewController.swift in Sources */,
+				5258858428C5148C002FAC72 /* ProductApiManager.swift in Sources */,
+				5258858628C514EF002FAC72 /* GetProductResponse.swift in Sources */,
 				5204A6C2288C37CC00DE4C41 /* AccountViewController.swift in Sources */,
 				5213A1EE289E910200A5B6BE /* Product.swift in Sources */,
 				5204A6BA288C378B00DE4C41 /* ShopViewController.swift in Sources */,
@@ -371,6 +382,7 @@
 				5204A6B6288AFF9E00DE4C41 /* Utilities.swift in Sources */,
 				5258857A28C39EF8002FAC72 /* AuthApiManager.swift in Sources */,
 				5230EE9028B101B8001CA6F2 /* ProductDetailViewController.swift in Sources */,
+				5258858228C3DD8A002FAC72 /* LoginResponse.swift in Sources */,
 				5204A6BC288C379B00DE4C41 /* ExploreViewController.swift in Sources */,
 				5258857E28C3A06C002FAC72 /* CreateUserResponse.swift in Sources */,
 				5282512E28B15C71005AA093 /* CategoryCollectionViewCell.swift in Sources */,

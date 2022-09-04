@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
         var vc:UIViewController
+       
         if(ApiManager.shared.accessToken == ""){
          vc = UINavigationController(rootViewController:LoginViewController())
         }else{

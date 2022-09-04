@@ -6,9 +6,14 @@
 //
 
 import Foundation
-struct Product{
+struct Product:Codable{
+    let id:String
+    let description:String
     let name:String
-    let imageUrl:String
-    let productPrice:String
-    let unitDescription:String
+    let price:Double
+    let categorie:String
+    let image:String
+    let available_quantity:Int
+    let unit_description:String
+    let is_available:Bool
 }
