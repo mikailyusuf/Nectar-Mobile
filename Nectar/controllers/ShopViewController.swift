@@ -25,7 +25,9 @@ enum SectionTypes{
     }
 }
 
+
 class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarDelegate {
+
   
     var sections = [SectionTypes]()
         
@@ -39,7 +41,7 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
     let searchController:UISearchController = {
        let results = UIViewController()
         results.view.backgroundColor = .red
-        let vc = UISearchController(searchResultsController: HomeSearchTableViewController())
+        let vc = UISearchController(searchResultsController: SearchViewController())
         vc.searchBar.placeholder = "Rice,Beans"
         vc.searchBar.searchBarStyle = .minimal
         vc.definesPresentationContext = true
@@ -104,12 +106,44 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
         }
       
     }
+    
+    
+    //MARK: SearchController
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        print("Item search is \(searchBar.text)")
+
+//        guard let resultsController = searchController.searchResultsController as? SearchViewController,
+//                let query = searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else{
+//            return
+//        }
+//        ProductApiManager.shared.searchProducts(query: query) { result in
+//            switch result{
+//
+//            case .success(let model):
+//                resultsController.update(with: model)
+//            case .failure(_):
+//                print("an error occured")
+//
+//            }
+//        }
+
     }
 
     func updateSearchResults(for searchController: UISearchController) {
-//        print("Item search is \(searchController.searchBar.text)")
+        
+        guard let resultsController = searchController.searchResultsController as? SearchViewController,
+              let query = searchController.searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else{
+            return
+        }
+        ProductApiManager.shared.searchProducts(query: query) { result in
+            switch result{
+                
+            case .success(let model):
+                resultsController.update(with: model)
+            case .failure(_):
+                print("an error occured")
+              
+            }
+        }
     }
     
     
@@ -215,6 +249,7 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
         let section = indexPath.section
         let title = sections[section].title
         header.setup(headerName: title)
+        header.delegate = self
         return header
     }
     
@@ -226,6 +261,8 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            
+            cell.delegate = self
             let item = latest[indexPath.row]
             cell.setup(product: item)
             return cell
@@ -234,6 +271,7 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            cell.delegate = self
             let item = bestSelling[indexPath.row]
             cell.setup(product: item)
 
@@ -243,6 +281,7 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
                 return UICollectionViewCell()
             }
             let item = electronics[indexPath.row]
+            cell.delegate = self
             cell.setup(product: item)
             return cell
         }
@@ -255,3 +294,18 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
     
 }
 
+extension ShopViewController:ProductCollectionViewCellDelegate{
+    func addToFavouritesClicked(_ view: ProductCollectionViewCell, product: Product) {
+        print("Product  Clicked ViewController \(product.name)")
+    }
+}
+
+
+
+extension ShopViewController:HeaderLayoutItemDelegate{
+    func seeAllClicked(_ view: HeaderLayoutItem, item: String) {
+        print("Header item cliked is \(item)")
+    }
+    
+ 
+}

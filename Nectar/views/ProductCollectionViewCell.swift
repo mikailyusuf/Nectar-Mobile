@@ -9,9 +9,16 @@ import UIKit
 import SwiftUI
 import SDWebImage
 
+protocol ProductCollectionViewCellDelegate:AnyObject{
+    
+    func addToFavouritesClicked(_ view:ProductCollectionViewCell,product:Product)
+}
+
 class ProductCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ProductCollectionViewCell"
+    
+    weak var delegate:ProductCollectionViewCellDelegate?
     
     private let productImage:UIImageView = {
        let image = UIImageView(image: UIImage(named: "apple"))
@@ -61,6 +68,11 @@ class ProductCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+   @objc func addToFavouritesClicked(){
+        guard let item = productItem else {return}
+        delegate?.addToFavouritesClicked(self,product: item)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -93,10 +105,16 @@ class ProductCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(stackView)
         stackView.anchor(top:unitDescription.bottomAnchor, left: contentView.leftAnchor,right:contentView.rightAnchor,paddingTop: 16,paddingLeft: 8,paddingRight: 8)
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addToFavouritesClicked))
+        addView.addGestureRecognizer(tapGesture)
+        addView.isUserInteractionEnabled = true
 
     }
     
+    var productItem:Product!
+    
     func setup(product:Product){
+        productItem = product
         productName.text = product.name
         productPrice.text = "\(product.price)"
         unitDescription.text = product.description

@@ -10,15 +10,15 @@ import UIKit
 
 class ExploreViewController: UIViewController{
     
-    let searchController:UISearchController = {
-        let results = UIViewController()
-        results.view.backgroundColor = .red
-        let vc = UISearchController(searchResultsController: HomeSearchTableViewController())
-        vc.searchBar.placeholder = "Search Store"
-        vc.searchBar.searchBarStyle = .minimal
-        vc.definesPresentationContext = true
-        return vc
-    }()
+//    let searchController:UISearchController = {
+//        let results = UIViewController()
+//        results.view.backgroundColor = .red
+//        let vc = UISearchController(searchResultsController: SearchTableViewController())
+//        vc.searchBar.placeholder = "Search Store"
+//        vc.searchBar.searchBarStyle = .minimal
+//        vc.definesPresentationContext = true
+//        return vc
+//    }()
     
 //    private let collectionView: UICollectionView = {
 //        let viewLayout = UICollectionViewFlowLayout()
@@ -36,11 +36,11 @@ class ExploreViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .systemBackground
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        navigationItem.searchController = searchController
+        
+//        searchController.searchResultsUpdater = self
+//        searchController.searchBar.delegate = self
+//        navigationItem.searchController = searchController
         
         setupViews()
         
@@ -111,9 +111,9 @@ extension ExploreViewController:UICollectionViewDelegateFlowLayout{
        }
 }
 
-
-extension ExploreViewController:UISearchResultsUpdating, UISearchBarDelegate{
-    func updateSearchResults(for searchController: UISearchController) {
-        
-    }
-}
+//
+//extension ExploreViewController:UISearchResultsUpdating, UISearchBarDelegate{
+//    func updateSearchResults(for searchController: UISearchController) {
+//
+//    }
+//}

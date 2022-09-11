@@ -6,5 +6,6 @@ target 'Nectar' do
   use_frameworks!
   pod 'SDWebImage', '~> 5.0'
   pod 'RandomColorSwift'
+  pod "ToastViewSwift"
 
 end

@@ -1,68 +1,58 @@
 //
-//  CategoryTypeViewController.swift
+//  HomeSearchTableViewController.swift
 //  Nectar
 //
-//  Created by Mikail on 21/08/2022.
+//  Created by Mikail on 20/08/2022.
 //
 
 import UIKit
 
-class CategoryTypeViewController: UIViewController {
+class SearchViewController: UIViewController {
+
+    var items = [String] ()
     
-//    let searchController:UISearchController = {
-//        let results = UIViewController()
-//        results.view.backgroundColor = .red
-//        let vc = UISearchController(searchResultsController: HomeSearchTableViewController())
-//        vc.searchBar.placeholder = "Search Store"
-//        vc.searchBar.searchBarStyle = .minimal
-//        vc.definesPresentationContext = true
-//        return vc
-//    }()
+    var products:[Product] = []
+     let CELLID = "CELLID"
     
     private let collectionView: UICollectionView =  Utilities().defaultCollection()
-
-
+    
     private enum LayoutConstant {
         static let spacing: CGFloat = 16.0
         static let itemHeight: CGFloat = 250.0
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Beverages"
-        
-//        searchController.searchResultsUpdater = self
-//        searchController.searchBar.delegate = self
-//        navigationItem.searchController = searchController
-        
-        setupViews()
-        
-        collectionView.frame = view.frame
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"),
-                                                            style: .done, target: self, action: #selector(filterIconClicked))
-    }
     
-    @objc func filterIconClicked(){
-        
-    }
+     override func viewDidLoad() {
+         super.viewDidLoad()
+         view.backgroundColor = .systemBackground
+         setupViews()
+         
+         collectionView.frame = view.frame
+     }
+     
+     private func setupViews() {
+         view.backgroundColor = .white
+         view.addSubview(collectionView)
+
+         collectionView.dataSource = self
+         collectionView.delegate = self
+         collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
+     }
+
+
     
-    private func setupViews() {
-        view.backgroundColor = .white
-        view.addSubview(collectionView)
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
-        
+    func update(with product:[Product]){
+        DispatchQueue.main.async {
+            self.products = product
+            self.collectionView.reloadData()
+        }
         
     }
-    
-    
 }
 
 
-extension CategoryTypeViewController:UICollectionViewDelegate,UICollectionViewDataSource{
+extension SearchViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -77,13 +67,15 @@ extension CategoryTypeViewController:UICollectionViewDelegate,UICollectionViewDa
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.setup(product: Product(id: "1", description: "test", name: "name", price: 234, categorie: "categorie", image: "image", available_quantity: 12, unit_description: "description", is_available: true))
+        
+        let product = products[indexPath.row]
+        cell.setup(product: product)
         return cell
     }
 }
 
 
-extension CategoryTypeViewController:UICollectionViewDelegateFlowLayout{
+extension SearchViewController:UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = itemWidth(for: view.frame.width, spacing: LayoutConstant.spacing)
@@ -112,10 +104,3 @@ extension CategoryTypeViewController:UICollectionViewDelegateFlowLayout{
         return finalWidth - 5.0
     }
 }
-
-
-//extension  CategoryTypeViewController:UISearchResultsUpdating, UISearchBarDelegate{
-//    func updateSearchResults(for searchController: UISearchController) {
-//
-//    }
-//}

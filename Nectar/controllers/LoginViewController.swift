@@ -42,6 +42,7 @@ class LoginViewController: UIViewController {
     
     var emailTextField:UITextField = {
         let textField = Utilities().textInputField()
+        textField.addTarget(self, action: #selector(emailTextFieldChanged), for: .editingChanged)
         return textField
     }()
     
@@ -51,6 +52,8 @@ class LoginViewController: UIViewController {
         return textField
     }()
     
+    
+ 
     
     lazy var emailContainerView:UIView = {
         let view = Utilities().inputContainerView(with: "Email", textInputField: emailTextField)
@@ -145,14 +148,15 @@ class LoginViewController: UIViewController {
     @objc func handleLogin(){
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
-        
+        showProgress()
         DispatchQueue.main.async {
             AuthApiManager.shared.loginUser(email: email, password: password) { result in
                 switch result{
-                case .success(let model):
-                    print("Success \(model)")
+                case .success(_):
+                    self.hideProgress()
                     self.presentHomeScreen()
                 case .failure(_):
+                    self.hideProgress()
                     print("Error with login")
                 }
             }
@@ -171,6 +175,30 @@ class LoginViewController: UIViewController {
     
     @objc func handleCreateAccountTapped(){
         navigationController?.pushViewController(SignUpViewController(), animated: false)
+    }
+    
+    
+    let spinner = SpinnerViewController()
+    
+    func showProgress() {
+        addChild(spinner)
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
+    
+    }
+    
+    
+    func hideProgress(){
+        DispatchQueue.main.async{
+            self.spinner.willMove(toParent: nil)
+            self.spinner.view.removeFromSuperview()
+            self.spinner.removeFromParent()
+        }
+    }
+    
+    @objc func emailTextFieldChanged() {
+        emailTextField.text = emailTextField.text?.lowercased()
     }
     
 }

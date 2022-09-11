@@ -14,7 +14,7 @@ class ProductDetailViewController: UIViewController {
     
     let productImage:UIImageView = {
         let image = UIImageView(image: UIImage(named: "apple"))
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleToFill     //.scaleAspectFill
         return image
     }()
     
@@ -201,8 +201,6 @@ class ProductDetailViewController: UIViewController {
         return label
     }()
     
-
-    
     let likeImage:UIImageView = {
         let image = UIImageView(image: UIImage(systemName:"heart"))
         image.contentMode = .scaleAspectFit
@@ -226,7 +224,8 @@ class ProductDetailViewController: UIViewController {
     }()
     
     let addToBasketBtn:UIButton = {
-        let button = Utilities().button(withLabel: "Add To Basket")
+        let button = Utilities().button(withLabel: "Order")
+        button.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -243,15 +242,7 @@ class ProductDetailViewController: UIViewController {
         setData()
     }
     
-    @objc func didTapRight(){
-        
-    }
     
-    @objc func didTapBack(){
-        print("back presses")
-        navigationController?.popViewController(animated: true)
-    }
-
     
     func setData(){
         guard let product = product else {return}
@@ -264,8 +255,6 @@ class ProductDetailViewController: UIViewController {
     
     private func setupViews(){
         view.addSubview(productImage)
-        
-
         
         productImage.anchor(top:view.topAnchor,left: view.leftAnchor,right: view.rightAnchor,height: 300)
         view.addSubview(stackUnitDescription)
@@ -296,30 +285,59 @@ class ProductDetailViewController: UIViewController {
         
     }
     
- 
-    
-    
-}
+    func gotoCheckOutController(checkoutUrl:String){
+        DispatchQueue.main.async {
+            let vc = CheckoutViewController()
+            vc.pstkUrl = checkoutUrl
+            self.navigationController?.pushViewController(vc, animated: false)
+        }
 
-struct ProductDetailViewControllerRepresentable:UIViewControllerRepresentable{
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        UINavigationController(rootViewController: ProductDetailViewController())
     }
     
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    //MARK: Selectors
+    
+    @objc func orderButtonTapped(){
+        showProgress()
+        OrdersApiManager.shared.createOrder(withId: product.id) { result in
+            switch result{
+            case .success(let model):
+                self.hideProgress()
+                self.gotoCheckOutController(checkoutUrl: model.payment_url)
+            case .failure(_):
+                self.hideProgress()
+            }
+        }
+    }
+    
+    let spinner = SpinnerViewController()
+    
+    func showProgress() {
+        addChild(spinner)
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
+    
+    }
+    
+    
+    func hideProgress(){
+        DispatchQueue.main.async{
+            self.spinner.willMove(toParent: nil)
+            self.spinner.view.removeFromSuperview()
+            self.spinner.removeFromParent()
+        }
+    }
+    
+    @objc func didTapRight(){
         
     }
     
+    @objc func didTapBack(){
+        print("back presses")
+        navigationController?.popViewController(animated: true)
+    }
+
+    
+ 
 }
 
-struct ProductDetailViewController_Preview:PreviewProvider{
-    
-    static var previews:some View{
-        ProductDetailViewControllerRepresentable()
-            .edgesIgnoringSafeArea(.top)
-            .environment(\.sizeCategory, ContentSizeCategory.accessibilityMedium)
-    }
-    
-    
-}

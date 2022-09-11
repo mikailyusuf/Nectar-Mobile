@@ -8,8 +8,17 @@
 import UIKit
 import SwiftUI
 
+
+protocol HeaderLayoutItemDelegate:AnyObject{
+    
+    func seeAllClicked(_ view:HeaderLayoutItem,item:String)
+}
+
 class HeaderLayoutItem: UICollectionReusableView {
     static let reuseIdentifier  = "HeaderLayoutItem"
+    
+    weak var delegate:HeaderLayoutItemDelegate?
+    var sectionName:String?
     
     private let seeAllLabel:UILabel = {
        let label = UILabel()
@@ -37,11 +46,21 @@ class HeaderLayoutItem: UICollectionReusableView {
         addSubview(seeAllLabel)
         addSubview(headerName)
         
+        
         headerName.anchor(left:leftAnchor,paddingLeft: 16)
         headerName.centerY(inView: self)
         
         seeAllLabel.anchor(right:rightAnchor,paddingRight: 16)
         seeAllLabel.centerY(inView: self)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(seeAllLabellClicked))
+        seeAllLabel.addGestureRecognizer(tapGesture)
+        seeAllLabel.isUserInteractionEnabled = true
+    }
+    
+    @objc func seeAllLabellClicked(){
+        guard let section = sectionName else {return}
+        delegate?.seeAllClicked(self, item: section)
     }
     
     required init?(coder: NSCoder) {
@@ -49,6 +68,7 @@ class HeaderLayoutItem: UICollectionReusableView {
     }
     
     func setup(headerName name:String){
+        sectionName = name
         headerName.text = name
     }
         

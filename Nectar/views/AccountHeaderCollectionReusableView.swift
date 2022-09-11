@@ -72,24 +72,24 @@ class AccountHeaderCollectionReusableView: UICollectionReusableView {
         
 }
 
-struct  AccountHeaderCollectionReusableView_Representable:UIViewRepresentable{
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
-    
-    func makeUIView(context: Context) -> AccountHeaderCollectionReusableView {
-        let header = AccountHeaderCollectionReusableView()
-        return header
-    }
-}
-
-struct AccountyHeader_Preview:PreviewProvider{
-    
-    static var previews: some View{
-        Group{
-            AccountHeaderCollectionReusableView_Representable()
-                .frame(width: 300, height: 30)
-        }
-    }
-}
+//struct  AccountHeaderCollectionReusableView_Representable:UIViewRepresentable{
+//
+//    func updateUIView(_ uiView: UIViewType, context: Context) {
+//
+//    }
+//
+//    func makeUIView(context: Context) -> AccountHeaderCollectionReusableView {
+//        let header = AccountHeaderCollectionReusableView()
+//        return header
+//    }
+//}
+//
+//struct AccountyHeader_Preview:PreviewProvider{
+//
+//    static var previews: some View{
+//        Group{
+//            AccountHeaderCollectionReusableView_Representable()
+//                .frame(width: 300, height: 30)
+//        }
+//    }
+//}

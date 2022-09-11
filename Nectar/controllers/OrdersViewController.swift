@@ -7,19 +7,23 @@
 
 import UIKit
 
-class CartViewController: UIViewController {
+class OrdersViewController: UIViewController {
 
     
     private let collectionView: UICollectionView =  Utilities().defaultCollection()
     
+    var orders:[Orders] = []
+    
     private enum LayoutConstant {
         static let spacing: CGFloat = 16.0
-        static let itemHeight: CGFloat = 100.0
+        static let itemHeight: CGFloat = 120.0
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "My Cart"
+        title = "Orders"
         setupViews()
+        getOrders()
+        
     }
         
     private func setupViews() {
@@ -28,18 +32,34 @@ class CartViewController: UIViewController {
         collectionView.frame = view.frame
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(CartCollectionViewCell.self, forCellWithReuseIdentifier: CartCollectionViewCell.identifier)
+        collectionView.register(OrderCollectionViewCell.self, forCellWithReuseIdentifier: OrderCollectionViewCell.identifier)
         
         
+    }
+    
+    func getOrders(){
+        OrdersApiManager.shared.getAllOrder { order in
+            switch order{
+            case .success(let data):
+                DispatchQueue.main.async {
+                    self.orders = data
+                    self.collectionView.reloadData()
+                }
+               
+                
+            case .failure(_):
+                print("An error occured")
+            }
+        }
     }
     
 
 }
 
 
-extension CartViewController:UICollectionViewDelegate,UICollectionViewDataSource{
+extension OrdersViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        orders.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -48,15 +68,17 @@ extension CartViewController:UICollectionViewDelegate,UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CartCollectionViewCell.identifier, for: indexPath) as? CartCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderCollectionViewCell.identifier, for: indexPath) as? OrderCollectionViewCell else {
             return UICollectionViewCell()
         }
+        let order = orders[indexPath.row]
+        cell.setup(order: order)
         return cell
     }
 }
 
 
-extension CartViewController:UICollectionViewDelegateFlowLayout{
+extension OrdersViewController:UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = (view.frame.width) - 32

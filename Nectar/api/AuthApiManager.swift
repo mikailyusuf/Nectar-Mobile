@@ -18,7 +18,6 @@ struct AuthApiManager{
             var request = baseResquest
             let json:[String:String] = ["email":user.email,"username":user.username,"password":user.password,"phone_number":user.phoneNumber]
             request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else{
                     return

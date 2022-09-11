@@ -14,14 +14,14 @@ class HomeViewController: UITabBarController {
 
         let vc1 = ShopViewController()
         let vc2 = ExploreViewController()
-        let vc3 = CartViewController()
+        let vc3 =   OrdersViewController()
         let vc4 = FavouriteViewController()
         let vc5 = AccountViewController()
    
         
 //        vc1.title = "Shop"
         vc2.title = "Explore"
-        vc3.title = "Cart"
+        vc3.title = "Orders"
         vc4.title = "Favourite"
         vc5.title = "Account"
         
@@ -34,7 +34,7 @@ class HomeViewController: UITabBarController {
    
         nav1.tabBarItem = UITabBarItem(title:"Shop", image:UIImage(systemName: "house"), tag: 1)
         nav2.tabBarItem = UITabBarItem(title:"Explore", image:UIImage(systemName: "magnifyingglass"), tag: 2)
-        nav3.tabBarItem = UITabBarItem(title:"Cart", image:UIImage(systemName: "cart"), tag: 3)
+        nav3.tabBarItem = UITabBarItem(title:"Orders", image:UIImage(systemName: "cart"), tag: 3)
         nav4.tabBarItem = UITabBarItem(title:"Favourite", image:UIImage(systemName: "suit.heart"), tag: 4)
         nav5.tabBarItem = UITabBarItem(title:"Account", image:UIImage(systemName: "person"), tag: 5)
         
