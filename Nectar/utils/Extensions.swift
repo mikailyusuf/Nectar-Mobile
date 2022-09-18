@@ -142,3 +142,14 @@ extension UIView {
     }
   
 }
+
+extension Int{
+     func toNaira() -> String {
+     
+           let numberFormatter = NumberFormatter()
+           numberFormatter.locale = Locale(identifier: "ig_NG")
+            numberFormatter.numberStyle = NumberFormatter.Style.currency
+           return numberFormatter.string(from: NSNumber(value: self)) ?? ""
+   
+  }
+}

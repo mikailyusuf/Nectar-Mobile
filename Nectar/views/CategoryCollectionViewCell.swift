@@ -20,24 +20,21 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     private let categoryImage:UIImageView = {
        let image = UIImageView(image: UIImage(named: "meat"))
-        image.contentMode  = .scaleToFill
+        image.contentMode  = .scaleAspectFill
+        image.layer.masksToBounds = true
+        image.layer.cornerRadius = 16
+        image.clipsToBounds = true
+        
         return image
     }()
     
-    private let categoryName:UILabel = {
-       let label = UILabel()
-        label.text = "Frash Fruits\n & Vegetable"
-        label.textColor = .black
-        label.font = UIFont(name: Constants.GilroyBold, size: 26)
-        return label
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         let color = randomColor()
         
-        layer.borderWidth = 2
+        layer.borderWidth = 1
         layer.cornerRadius = LayoutConstant.padding
         layer.borderColor = color.cgColor
         layer.backgroundColor = color.cgColor.copy(alpha: 0.1)
@@ -48,18 +45,14 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     private func setupViews(){
         addSubview(categoryImage)
-        addSubview(categoryName)
-        
-        categoryImage.anchor(top:topAnchor,left: leftAnchor,right:rightAnchor,paddingTop: LayoutConstant.padding,paddingLeft: LayoutConstant.padding,paddingRight: LayoutConstant.padding,height: 80)
-        
-        categoryName.anchor(top:categoryImage.bottomAnchor, paddingTop: LayoutConstant.padding)
-        categoryName.centerX(inView: self)
-        
-    }
+      
+        categoryImage.anchor(top:topAnchor,left: leftAnchor,bottom:bottomAnchor, right:rightAnchor)
+        }
     
     
-    func setup(name:String){
-        categoryName.text = name
+    func setup(brand:Brand){
+        categoryImage.sd_setImage(with: URL(string: brand.image), completed: nil)
+//        categoryName.text = name
     }
     
     required init?(coder: NSCoder) {

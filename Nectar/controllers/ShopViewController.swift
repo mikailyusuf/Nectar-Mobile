@@ -7,11 +7,12 @@
 
 import UIKit
 import SwiftUI
+import ToastViewSwift
 
-enum SectionTypes{
-    case latest
-    case bestSelling
-    case electronics
+enum SectionTypes:String{
+    case latest = "Latest"
+    case bestSelling = "Best Selling"
+    case electronics = "Electronics"
     
     var title:String{
         switch self {
@@ -110,21 +111,6 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
     
     //MARK: SearchController
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
-//        guard let resultsController = searchController.searchResultsController as? SearchViewController,
-//                let query = searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else{
-//            return
-//        }
-//        ProductApiManager.shared.searchProducts(query: query) { result in
-//            switch result{
-//
-//            case .success(let model):
-//                resultsController.update(with: model)
-//            case .failure(_):
-//                print("an error occured")
-//
-//            }
-//        }
 
     }
 
@@ -291,11 +277,23 @@ extension ShopViewController:UICollectionViewDataSource,UICollectionViewDelegate
         return sections.count
     }
     
-    
 }
 
 extension ShopViewController:ProductCollectionViewCellDelegate{
     func addToFavouritesClicked(_ view: ProductCollectionViewCell, product: Product) {
+        FavouriteApiManager.shared.addFavourite(withId: product.id) { result in
+            switch result{
+                
+            case .success(_):
+                DispatchQueue.main.async {
+                    let toast = Toast.text("Product was saved to Favourite.")
+                    toast.show()
+                }
+               
+            case .failure(_):
+                print("An error occured")
+            }
+        }
         print("Product  Clicked ViewController \(product.name)")
     }
 }
@@ -304,8 +302,25 @@ extension ShopViewController:ProductCollectionViewCellDelegate{
 
 extension ShopViewController:HeaderLayoutItemDelegate{
     func seeAllClicked(_ view: HeaderLayoutItem, item: String) {
-        print("Header item cliked is \(item)")
-    }
+        
+        let vc = AllProductsViewController()
+        let section =  SectionTypes(rawValue: item)
+        
+        switch section{
+        case .latest:
+            vc.products = latest
+        case .bestSelling:
+            vc.products = bestSelling
+        case .electronics:
+            vc.products = electronics
+        case .none:
+            vc.products = latest
+        }
+        
+        navigationController?.pushViewController(vc, animated: false)
     
  
 }
+    
+}
+

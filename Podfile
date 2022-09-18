@@ -7,5 +7,6 @@ target 'Nectar' do
   pod 'SDWebImage', '~> 5.0'
   pod 'RandomColorSwift'
   pod "ToastViewSwift"
+  pod 'SwiftyOnboard'
 
 end

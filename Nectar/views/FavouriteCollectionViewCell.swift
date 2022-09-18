@@ -14,8 +14,10 @@ class FavouriteCollectionViewCell: UICollectionViewCell {
     
     private let productImage:UIImageView = {
         let image = UIImageView(image: UIImage(named: "sprite"))
-        image.contentMode  = .scaleAspectFit
-        image.setDimensions(width: 60, height: 60)
+        image.contentMode  = .scaleAspectFill
+        image.layer.cornerRadius = 8
+//        image.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        image.clipsToBounds = true
         return image
     }()
     
@@ -54,29 +56,14 @@ class FavouriteCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var productNameStack:UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [productName,unitDescriptionLabel])
+        let stack = UIStackView(arrangedSubviews: [productName,productPrice])
         stack.axis = .vertical
         stack.distribution = .fill
         stack.spacing = 8
         return stack
     }()
     
-    private lazy var priceStack:UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [productPrice,proceedImage])
-        stack.axis = .horizontal
-        stack.spacing = 8
-        stack.alignment = .center
-        stack.distribution = .fill
-        return stack
-    }()
-    
-    private lazy var mainStackView:UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [productImage,productNameStack,priceStack])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        return stack
-    }()
-    
+
     let lineView:UIView = {
        let view = UIView()
         view.backgroundColor = .black.withAlphaComponent(0.1)
@@ -87,21 +74,32 @@ class FavouriteCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(mainStackView)
+        addSubview(productName)
         addSubview(productImage)
+        addSubview(productPrice)
+        addSubview(proceedImage)
         addSubview(productNameStack)
-        addSubview(priceStack)
-        productImage.anchor(top:topAnchor,left: leftAnchor)
-        productNameStack.anchor(top:topAnchor,left: productImage.rightAnchor,paddingLeft: 24)
-        priceStack.anchor(right:rightAnchor)
-        priceStack.centerY(inView: productNameStack)
         
+        productImage.anchor(top:topAnchor,left: leftAnchor, bottom: bottomAnchor,paddingTop: 8,paddingBottom: 8,width:120, height: 120)
+        productNameStack.centerY(inView:productImage)
+        productNameStack.anchor(left:productImage.rightAnchor,paddingLeft: 16)
+
+        proceedImage.anchor(right:self.rightAnchor,paddingRight: 16)
+        proceedImage.centerY(inView: productImage)
         addSubview(lineView)
-        lineView.anchor(top:productImage.bottomAnchor,left: leftAnchor,right: rightAnchor,paddingTop: 24,height: 0.5)
+        lineView.anchor(top:productImage.bottomAnchor,left: leftAnchor,right: rightAnchor,paddingTop:8,height: 0.5)
     }
     
     required init?(coder: NSCoder) {
         fatalError("Xib not initialised")
+    }
+    
+    
+    func setup(favourite:Favourite){
+        productName.text = favourite.name
+        productPrice.text = favourite.price.toNaira()
+        productImage.sd_setImage(with: URL(string: favourite.image), completed: nil)
+        
     }
     
     
@@ -125,7 +123,7 @@ struct FavouriteCollectionViewCell_Preview:PreviewProvider{
     static var previews: some View{
         Group{
             FavouriteCollectionViewCellRepresentable()
-                .frame(width: 300, height: 180)
+                .frame(width: 300, height: 120)
         }
     }
 }

@@ -20,7 +20,6 @@ class ProductDetailViewController: UIViewController {
     
     let productNameText:UILabel = {
         let label = UILabel()
-        label.text = "Natural Red Apple"
         label.textColor = .black
         label.font = UIFont(name: Constants.GilroyBold, size: 26)
         return label
@@ -130,21 +129,6 @@ class ProductDetailViewController: UIViewController {
         return image
     }()
     
-    let nutritionsLabel:UILabel = {
-        let label = UILabel()
-        label.text = "Nutritions"
-        label.textColor = .blackTextColor
-        label.font = UIFont(name: Constants.GilroyMedium, size: 16)
-        return label
-    }()
-    
-    private lazy var nutritionStack:UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [nutritionsLabel,arrowRight1])
-        stack.axis = .horizontal
-        stack.distribution = .equalSpacing
-        return stack
-    }()
-    
 
     let reviewLabel:UILabel = {
         let label = UILabel()
@@ -192,14 +176,6 @@ class ProductDetailViewController: UIViewController {
         stack.spacing = 8
         return stack
     }()
-
-    let unitDescriptionText:UILabel = {
-        let label = UILabel()
-        label.text = "1kg, Price"
-        label.textColor = .lightGray
-        label.font = UIFont(name: Constants.GilroyLight, size: 16)
-        return label
-    }()
     
     let likeImage:UIImageView = {
         let image = UIImageView(image: UIImage(systemName:"heart"))
@@ -216,7 +192,7 @@ class ProductDetailViewController: UIViewController {
     }()
     
     private lazy var stackUnitDescription:UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [stackProductName,unitDescriptionText])
+       let stack = UIStackView(arrangedSubviews: [stackProductName])
         stack.axis = .vertical
         stack.spacing = 4
         stack.distribution = .fillEqually
@@ -232,7 +208,6 @@ class ProductDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"),
                                                             style: .done, target: self, action: #selector(didTapRight))
         
@@ -242,15 +217,13 @@ class ProductDetailViewController: UIViewController {
         setData()
     }
     
-    
-    
     func setData(){
         guard let product = product else {return}
     
         productImage.sd_setImage(with: URL(string: product.image), completed: nil)
         detailLabel.text = product.description
         productNameText.text = product.name
-        productPrice.text = "\(product.price)"
+        productPrice.text = product.price.toNaira()
     }
     
     private func setupViews(){
@@ -269,13 +242,9 @@ class ProductDetailViewController: UIViewController {
         view.addSubview(detailStackView)
         detailStackView.anchor(top:lineView1.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 16,paddingLeft: 16,paddingRight: 16)
         
-        view.addSubview(lineView2)
-        lineView2.anchor(top:detailStackView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 0.5)
-        view.addSubview(nutritionStack)
-        nutritionStack.anchor(top:lineView2.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16,height: 30)
-        
+
         view.addSubview(lineView3)
-        lineView3.anchor(top:nutritionStack.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 0.5)
+        lineView3.anchor(top:detailStackView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 0.5)
         
         view.addSubview(reviewStack)
         reviewStack.anchor(top:lineView3.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16,height: 30)
@@ -285,19 +254,15 @@ class ProductDetailViewController: UIViewController {
         
     }
     
-    func gotoCheckOutController(checkoutUrl:String){
-        DispatchQueue.main.async {
-            let vc = CheckoutViewController()
-            vc.pstkUrl = checkoutUrl
-            self.navigationController?.pushViewController(vc, animated: false)
-        }
-
-    }
     
     //MARK: Selectors
-    
     @objc func orderButtonTapped(){
         showProgress()
+        createOrder()
+    }
+    
+    //MARK: API
+    private func createOrder(){
         OrdersApiManager.shared.createOrder(withId: product.id) { result in
             switch result{
             case .success(let model):
@@ -307,6 +272,15 @@ class ProductDetailViewController: UIViewController {
                 self.hideProgress()
             }
         }
+    }
+    
+    func gotoCheckOutController(checkoutUrl:String){
+        DispatchQueue.main.async {
+            let vc = CheckoutViewController()
+            vc.pstkUrl = checkoutUrl
+            self.navigationController?.pushViewController(vc, animated: false)
+        }
+
     }
     
     let spinner = SpinnerViewController()
@@ -333,7 +307,6 @@ class ProductDetailViewController: UIViewController {
     }
     
     @objc func didTapBack(){
-        print("back presses")
         navigationController?.popViewController(animated: true)
     }
 

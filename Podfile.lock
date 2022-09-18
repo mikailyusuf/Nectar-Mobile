@@ -3,24 +3,28 @@ PODS:
   - SDWebImage (5.12.3):
     - SDWebImage/Core (= 5.12.3)
   - SDWebImage/Core (5.12.3)
+  - SwiftyOnboard (1.4.0)
   - ToastViewSwift (1.1.0)
 
 DEPENDENCIES:
   - RandomColorSwift
   - SDWebImage (~> 5.0)
+  - SwiftyOnboard
   - ToastViewSwift
 
 SPEC REPOS:
   trunk:
     - RandomColorSwift
     - SDWebImage
+    - SwiftyOnboard
     - ToastViewSwift
 
 SPEC CHECKSUMS:
   RandomColorSwift: d18b9b025403137b5543a002187489b06cc1782b
   SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
+  SwiftyOnboard: 76a648dc1dcbc844343b6b95fe5883cb64a62f4a
   ToastViewSwift: 8fc7b518fdd834daf4b8009d09435a3fb1d8df46
 
-PODFILE CHECKSUM: 651965378e01e9b1046ec18071728a0aeb6e117a
+PODFILE CHECKSUM: 56f767b7f26a4ffdcbf386249369064da248c798
 
 COCOAPODS: 1.11.3
