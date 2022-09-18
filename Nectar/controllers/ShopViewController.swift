@@ -43,7 +43,7 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
        let results = UIViewController()
         results.view.backgroundColor = .red
         let vc = UISearchController(searchResultsController: SearchViewController())
-        vc.searchBar.placeholder = "Rice,Beans"
+        vc.searchBar.placeholder = "Iphone, ps4"
         vc.searchBar.searchBarStyle = .minimal
         vc.definesPresentationContext = true
         return vc

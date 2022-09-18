@@ -41,6 +41,7 @@
 		52661E16288346880092A5FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52661E14288346880092A5FA /* LaunchScreen.storyboard */; };
 		52661E232883491B0092A5FA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52661E222883491B0092A5FA /* OnboardingViewController.swift */; };
 		52661E27288349930092A5FA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52661E26288349930092A5FA /* Extensions.swift */; };
+		5272B54C28D7610B00AAD0A7 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272B54B28D7610B00AAD0A7 /* UserModel.swift */; };
 		5275E6D028B23B12007339C2 /* CategoryTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5275E6CF28B23B12007339C2 /* CategoryTypeViewController.swift */; };
 		5275E6D228B24486007339C2 /* OrderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5275E6D128B24486007339C2 /* OrderCollectionViewCell.swift */; };
 		5282512E28B15C71005AA093 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5282512D28B15C71005AA093 /* CategoryCollectionViewCell.swift */; };
@@ -95,6 +96,7 @@
 		52661E17288346880092A5FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52661E222883491B0092A5FA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		52661E26288349930092A5FA /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5272B54B28D7610B00AAD0A7 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		5275E6CF28B23B12007339C2 /* CategoryTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypeViewController.swift; sourceTree = "<group>"; };
 		5275E6D128B24486007339C2 /* OrderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCollectionViewCell.swift; sourceTree = "<group>"; };
 		5282512D28B15C71005AA093 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				522D9C9028CCE3820074A60D /* Orders.swift */,
 				52EFD38628D62270002E1CD6 /* Favourite.swift */,
 				521182EF28D72D1700FC258D /* Brand.swift */,
+				5272B54B28D7610B00AAD0A7 /* UserModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				5204A6B6288AFF9E00DE4C41 /* Utilities.swift in Sources */,
 				5258857A28C39EF8002FAC72 /* AuthApiManager.swift in Sources */,
 				5230EE9028B101B8001CA6F2 /* ProductDetailViewController.swift in Sources */,
+				5272B54C28D7610B00AAD0A7 /* UserModel.swift in Sources */,
 				5258858228C3DD8A002FAC72 /* LoginResponse.swift in Sources */,
 				5204A6BC288C379B00DE4C41 /* ExploreViewController.swift in Sources */,
 				5258857E28C3A06C002FAC72 /* CreateUserResponse.swift in Sources */,

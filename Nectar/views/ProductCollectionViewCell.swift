@@ -32,7 +32,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
     private let productName:UILabel = {
        let label = UILabel()
         label.text = "Banana Test"
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label

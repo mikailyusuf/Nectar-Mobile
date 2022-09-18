@@ -18,8 +18,7 @@ class HomeViewController: UITabBarController {
         let vc4 = FavouriteViewController()
         let vc5 = AccountViewController()
    
-        
-//        vc1.title = "Shop"
+
         vc2.title = "Explore"
         vc3.title = "Orders"
         vc4.title = "Favourite"

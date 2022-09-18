@@ -74,24 +74,4 @@ class HeaderLayoutItem: UICollectionReusableView {
         
 }
 
-struct HeaderLayoutItemRepresentable:UIViewRepresentable{
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
-    
-    func makeUIView(context: Context) -> HeaderLayoutItem {
-        let header = HeaderLayoutItem()
-        return header
-    }
-    
-}
 
-struct HeaderLayoutItem_Preview:PreviewProvider{
-    
-    static var previews:some View{
-        Group {
-            HeaderLayoutItemRepresentable()
-                .frame(width: 300, height: 50)
-        }
-    }
-}

@@ -8,9 +8,15 @@
 import UIKit
 import SwiftUI
 
+protocol AccountFooterDelegate:AnyObject{
+    func logout(_ footer:AccountFooterCollectionReusableView)
+}
+
 class AccountFooterCollectionReusableView: UICollectionReusableView {
     static let identifier = "AccountFooterCollectionReusableView"
     
+    
+    weak var delegate:AccountFooterDelegate?
     let logOutText:UILabel = {
         let label = UILabel()
         label.text = "Log Out"
@@ -42,28 +48,13 @@ class AccountFooterCollectionReusableView: UICollectionReusableView {
     override func layoutSubviews() {
                 addSubview(logoutView)
         logoutView.anchor(top:topAnchor,left:leftAnchor, bottom:bottomAnchor, right: rightAnchor,paddingLeft: 16,paddingRight: 16,height: 200)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(logoutClicked))
+        logoutView.addGestureRecognizer(tapGesture)
+        logoutView.isUserInteractionEnabled = true
+    }
+    
+    @objc func logoutClicked(){
+        delegate?.logout(self)
     }
 }
 
-
-struct  AccountFooterCollectionReusableView_Representable:UIViewRepresentable{
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
-    
-    func makeUIView(context: Context) -> AccountFooterCollectionReusableView {
-        let header = AccountFooterCollectionReusableView()
-        return header
-    }
-}
-
-struct AccountFooterCollectionReusableView_Preview:PreviewProvider{
-    
-    static var previews: some View{
-        Group{
-            AccountFooterCollectionReusableView_Representable()
-                .frame(width: 300, height: 30)
-        }
-    }
-}
