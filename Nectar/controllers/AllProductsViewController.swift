@@ -1,72 +1,46 @@
 //
-//  CategoryTypeViewController.swift
+//  AllProductsViewController.swift
 //  Nectar
 //
-//  Created by Mikail on 21/08/2022.
+//  Created by Mikail on 17/09/2022.
 //
 
 import UIKit
 
-class CategoryTypeViewController: UIViewController {
-    
-    var brand:Brand!
-    var products:[Product] = []
-    private let collectionView: UICollectionView =  Utilities().defaultCollection()
+class AllProductsViewController: UIViewController {
 
+    var products:[Product] = []
+     let CELLID = "CELLID"
+    
+    private let collectionView: UICollectionView =  Utilities().defaultCollection()
+    
     private enum LayoutConstant {
         static let spacing: CGFloat = 16.0
         static let itemHeight: CGFloat = 250.0
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = brand.name
-    
+        view.backgroundColor = .systemBackground
         setupViews()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"),
-                    
-                                                            style: .done, target: self, action: #selector(filterIconClicked))
-        getBrandProducts()
+        collectionView.frame = view.frame
     }
-    
-    @objc func filterIconClicked(){
-        
-    }
-    
-    func getBrandProducts(){
-        BrandApiManager.shared.getBrandProducts(withBrand: brand.name) { result in
-            switch result{
-            case .success(let data):
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                    self.products = data
-                }
-           
-            case .failure(_):
-                print("An error occured getting Brand Products")
-            }
-        }
-    }
-    
-    
     
     private func setupViews() {
-        collectionView.frame = view.frame
         view.backgroundColor = .white
         view.addSubview(collectionView)
-        
+
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
-        
-        
     }
-    
-    
+
 }
 
 
-extension CategoryTypeViewController:UICollectionViewDelegate,UICollectionViewDataSource{
+extension AllProductsViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         products.count
     }
@@ -92,7 +66,7 @@ extension CategoryTypeViewController:UICollectionViewDelegate,UICollectionViewDa
 }
 
 
-extension CategoryTypeViewController:UICollectionViewDelegateFlowLayout{
+extension AllProductsViewController:UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = itemWidth(for: view.frame.width, spacing: LayoutConstant.spacing)
@@ -121,4 +95,3 @@ extension CategoryTypeViewController:UICollectionViewDelegateFlowLayout{
         return finalWidth - 5.0
     }
 }
-

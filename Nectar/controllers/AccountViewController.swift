@@ -10,11 +10,20 @@ import UIKit
 class AccountViewController: UIViewController {
     
     private let collectionView: UICollectionView =  Utilities().defaultCollection()
+    var settingsItems:[SettingsItem] = [SettingsItem(title: "Notifications", icon: UIImage(systemName: "bell")!),
+                                        SettingsItem(title: "Messages", icon: UIImage(systemName: "message")!),
+                                        SettingsItem(title: "Profile", icon: UIImage(systemName: "person")!),
+                                        SettingsItem(title: "Coupons", icon: UIImage(systemName: "bell")!),
+                                        SettingsItem(title: "Location", icon: UIImage(systemName: "location")!)
+                                        ]
     
+    var headerView:AccountHeaderCollectionReusableView?
     private enum LayoutConstant {
         static let spacing: CGFloat = 16.0
         static let itemHeight: CGFloat = 50.0
     }
+    
+    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +52,7 @@ class AccountViewController: UIViewController {
 
 extension AccountViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        8
+        settingsItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -54,17 +63,24 @@ extension AccountViewController:UICollectionViewDelegate,UICollectionViewDataSou
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AccountCollectionViewCell.identifier, for: indexPath) as? AccountCollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        let item = settingsItems[indexPath.row]
+        cell.setup(item: item)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind{
         case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AccountHeaderCollectionReusableView.identifier, for: indexPath) as! AccountHeaderCollectionReusableView
-            return header
+            headerView = (collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AccountHeaderCollectionReusableView.identifier, for: indexPath) as! AccountHeaderCollectionReusableView)
+            
+            headerView!.delegate = self
+         
+            return headerView!
             
         case UICollectionView.elementKindSectionFooter:
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AccountFooterCollectionReusableView.identifier, for: indexPath) as! AccountFooterCollectionReusableView
+            footer.delegate = self
             return footer
         default:
             assert(false, "Unexpected element kind")
@@ -99,3 +115,37 @@ extension AccountViewController:UICollectionViewDelegateFlowLayout{
     }
 }
 
+
+extension AccountViewController:AccountFooterDelegate{
+    func logout(_ footer: AccountFooterCollectionReusableView) {
+        let vc = UINavigationController(rootViewController: LoginViewController())
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion:nil)
+    }
+
+}
+
+extension AccountViewController:AccountHeaderDelegate{
+    func changeProfileimage(_ view: AccountHeaderCollectionReusableView) {
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        present(imagePicker, animated: true, completion: nil)
+    }
+
+}
+
+extension AccountViewController:UINavigationControllerDelegate, UIImagePickerControllerDelegate{
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+           self.dismiss(animated: true, completion: nil)
+        let user = UserModel(username: "Mikail", image: image, email: "mikailkyusuf@gmail.com")
+        
+        headerView?.userModel = user
+        collectionView.reloadData()
+       }
+}
+
+
+struct SettingsItem{
+    let title:String
+    let icon:UIImage
+}

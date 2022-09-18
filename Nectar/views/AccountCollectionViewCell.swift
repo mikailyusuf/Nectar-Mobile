@@ -28,7 +28,6 @@ class AccountCollectionViewCell: UICollectionViewCell {
     
     private let itemName:UILabel = {
         let label = UILabel()
-        label.text = "Notifications"
         label.textColor = .black
         label.font = UIFont(name: Constants.GilroyBold, size: 16)
         return label
@@ -41,6 +40,10 @@ class AccountCollectionViewCell: UICollectionViewCell {
     }()
    
     
+    func setup(item:SettingsItem){
+        itemName.text = item.title
+        icon.image = item.icon
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -48,7 +51,7 @@ class AccountCollectionViewCell: UICollectionViewCell {
         addSubview(proceedImage)
         addSubview(itemName)
         addSubview(lineView)
-//
+
         icon.anchor(left:leftAnchor)
         icon.centerY(inView: self)
         itemName.anchor(left:icon.rightAnchor,paddingLeft: 16)

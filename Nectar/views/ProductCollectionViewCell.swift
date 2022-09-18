@@ -32,7 +32,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
     private let productName:UILabel = {
        let label = UILabel()
         label.text = "Banana Test"
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
@@ -116,32 +116,10 @@ class ProductCollectionViewCell: UICollectionViewCell {
     func setup(product:Product){
         productItem = product
         productName.text = product.name
-        productPrice.text = "\(product.price)"
+        productPrice.text = product.price.toNaira()
         unitDescription.text = product.description
         productImage.sd_setImage(with: URL(string: product.image), completed: nil)
     }
     
 }
 
-
-//struct ProductCollectionViewCellRepresentable:UIViewRepresentable{
-//
-//    func updateUIView(_ uiView: UIViewType, context: Context) {
-//
-//    }
-//
-//    func makeUIView(context: Context) -> ProductCollectionViewCell {
-//        let cell = ProductCollectionViewCell()
-//        cell.setup(product: Product(name: "Apple", imageUrl: "", productPrice: "$32.12", unitDescription: "8pcs Per apple"))
-//        return cell
-//    }
-//}
-//
-//struct ProductCollectionViewCell_Preview:PreviewProvider{
-//    static var previews:some View{
-//        Group {
-//            ProductCollectionViewCellRepresentable()
-//                .frame(width: 170, height: 250)
-//        }
-//    }
-//}

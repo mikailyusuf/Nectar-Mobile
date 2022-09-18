@@ -10,25 +10,10 @@ import UIKit
 
 class ExploreViewController: UIViewController{
     
-//    let searchController:UISearchController = {
-//        let results = UIViewController()
-//        results.view.backgroundColor = .red
-//        let vc = UISearchController(searchResultsController: SearchTableViewController())
-//        vc.searchBar.placeholder = "Search Store"
-//        vc.searchBar.searchBarStyle = .minimal
-//        vc.definesPresentationContext = true
-//        return vc
-//    }()
-    
-//    private let collectionView: UICollectionView = {
-//        let viewLayout = UICollectionViewFlowLayout()
-//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
-//        collectionView.backgroundColor = .white
-//        return collectionView
-//    }()
-    
     private let collectionView: UICollectionView =  Utilities().defaultCollection()
     
+    var brands:[Brand] = []
+
     private enum LayoutConstant {
         static let spacing: CGFloat = 16.0
         static let itemHeight: CGFloat = 160.0
@@ -38,13 +23,10 @@ class ExploreViewController: UIViewController{
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-//        searchController.searchResultsUpdater = self
-//        searchController.searchBar.delegate = self
-//        navigationItem.searchController = searchController
         
         setupViews()
-        
         collectionView.frame = view.frame
+        getBrands()
     }
     
     private func setupViews() {
@@ -56,19 +38,34 @@ class ExploreViewController: UIViewController{
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
     }
     
-  
-    
-    
+    private func getBrands(){
+        BrandApiManager.shared.getBrands { result in
+            switch result{
+            case .success(let data):
+                DispatchQueue.main.async {
+                
+                    self.brands = data
+                    self.collectionView.reloadData()
+                }
+              
+            case .failure(_):
+                print("An error occured")
+            }
+        }
+    }
 }
+
+
 
 extension ExploreViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        brands.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let vc = CategoryTypeViewController()
+        vc.brand = brands[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -76,7 +73,9 @@ extension ExploreViewController:UICollectionViewDelegate,UICollectionViewDataSou
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as? CategoryCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.setup(name: "Meat")
+        
+        let brand = brands[indexPath.row]
+        cell.setup(brand: brand)
         return cell
     }
 }

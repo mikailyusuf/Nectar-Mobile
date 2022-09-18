@@ -10,7 +10,7 @@ struct Product:Codable{
     let id:String
     let description:String
     let name:String
-    let price:Double
+    let price:Int
     let categorie:String
     let image:String
     let available_quantity:Int

@@ -13,8 +13,7 @@ class CheckoutViewController: UIViewController, WKNavigationDelegate {
     var pstkUrl:String = ""
     let sUrl = "https://standard.paystack.co/close"
     
-    @IBOutlet weak var webView: WKWebView!
-    
+      var webView: WKWebView!
     
     override func loadView() {
     
@@ -57,7 +56,7 @@ class CheckoutViewController: UIViewController, WKNavigationDelegate {
             //and do what makes sense for our workflow. We can get the transaction reference for example.
             
             if url.absoluteString.hasPrefix(callbackUrl){
-                let reference = getQueryStringParameter(url: url.absoluteString, param: "reference")
+//                let reference = getQueryStringParameter(url: url.absoluteString, param: "reference")
                 let toast = Toast.text("Order was successful.")
                 toast.show()
                 print("Payment success")

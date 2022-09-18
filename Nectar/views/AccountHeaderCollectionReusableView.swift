@@ -8,12 +8,26 @@
 import UIKit
 import SwiftUI
 
+protocol AccountHeaderDelegate:AnyObject{
+    func changeProfileimage(_ view:AccountHeaderCollectionReusableView)
+}
+
 class AccountHeaderCollectionReusableView: UICollectionReusableView {
     
     static let identifier = "AccountHeaderCollectionReusableView"
+    weak var delegate:AccountHeaderDelegate?
     
-    private let userProfileImage:UIImageView = {
-        let image = UIImageView(image: UIImage(named: "userImage"))
+     var userModel:UserModel!{
+        didSet{
+            print("Items set")
+            userProfileImage.image = userModel.image
+            userName.text = userModel.username
+            userEmail.text = userModel.email
+        }
+    }
+    
+     let userProfileImage:UIImageView = {
+        let image = UIImageView(image: UIImage(systemName: "person.circle.fill"))
         image.contentMode  = .scaleAspectFit
         image.layer.cornerRadius = 20
         image.setDimensions(width: 65, height: 65)
@@ -29,9 +43,9 @@ class AccountHeaderCollectionReusableView: UICollectionReusableView {
     }()
     
 
-    private let userName:UILabel = {
+     let userName:UILabel = {
         let label = UILabel()
-        label.text = "Afsar Hossein"
+        label.text = "Jane Doe"
         label.textColor = .black
         label.font = UIFont(name: Constants.GilroyBold, size: 20)
         return label
@@ -39,7 +53,7 @@ class AccountHeaderCollectionReusableView: UICollectionReusableView {
     
     private let userEmail:UILabel = {
         let label = UILabel()
-        label.text = "afsarhussein@yahoo.com"
+        label.text = "janedoe@mail.com"
         label.textColor = .grayTextColor
         label.font = UIFont(name: Constants.GilroyMedium, size: 16)
         return label
@@ -68,28 +82,17 @@ class AccountHeaderCollectionReusableView: UICollectionReusableView {
         userProfileImage.anchor(top:topAnchor,left:leftAnchor,paddingTop: 16,paddingLeft: 16)
         mainStack.anchor(left:userProfileImage.rightAnchor,paddingLeft: 16)
         mainStack.centerY(inView: userProfileImage)
-    }
         
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageClicked))
+        userProfileImage.addGestureRecognizer(tapGesture)
+        userProfileImage.isUserInteractionEnabled = true
+    }
+ 
+    
+    @objc func profileImageClicked(){
+        delegate?.changeProfileimage(self)
+    }
 }
 
-//struct  AccountHeaderCollectionReusableView_Representable:UIViewRepresentable{
-//
-//    func updateUIView(_ uiView: UIViewType, context: Context) {
-//
-//    }
-//
-//    func makeUIView(context: Context) -> AccountHeaderCollectionReusableView {
-//        let header = AccountHeaderCollectionReusableView()
-//        return header
-//    }
-//}
-//
-//struct AccountyHeader_Preview:PreviewProvider{
-//
-//    static var previews: some View{
-//        Group{
-//            AccountHeaderCollectionReusableView_Representable()
-//                .frame(width: 300, height: 30)
-//        }
-//    }
-//}
+
