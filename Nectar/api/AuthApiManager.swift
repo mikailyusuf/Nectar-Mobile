@@ -13,9 +13,8 @@ struct AuthApiManager{
     
     public func createUser(with user:User,completion:@escaping (Result<CreateUserResponse,Error>) -> Void){
         
-        ApiManager.shared.createRequest(with: URL(string: Constants.BASE_URL + "api/auth/register"), type: .POST) { baseResquest in
-            
-            var request = baseResquest
+        var request = ApiManager.shared.createRequest(with: URL(string: Constants.BASE_URL + "auth/register")!, type: .POST)
+        
             let json:[String:String] = ["email":user.email,"username":user.username,"password":user.password,"phone_number":user.phoneNumber]
             request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -24,8 +23,8 @@ struct AuthApiManager{
                 }
                 do{
                     let result = try JSONDecoder().decode(CreateUserResponse.self, from: data)
-                    completion(.success(result))
                     ApiManager.shared.accessToken = result.token
+                    completion(.success(result))
                 }
                 catch{
                     completion(.failure(error))
@@ -33,15 +32,14 @@ struct AuthApiManager{
                 }
             }
             task.resume()
-        }
+        
     }
     
     
     public func loginUser(email:String,password:String,completion:@escaping (Result<LoginResponse,Error>) -> Void){
         
-        ApiManager.shared.createRequest(with: URL(string: Constants.BASE_URL + "api/auth/login"), type: .POST) { baseResquest in
-            
-            var request = baseResquest
+        var request = ApiManager.shared.createRequest(with: URL(string: Constants.BASE_URL + "auth/login")!, type: .POST)
+
             let json:[String:String] = ["email":email,"password":password]
             request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -51,8 +49,9 @@ struct AuthApiManager{
                 }
                 do{
                     let result = try JSONDecoder().decode(LoginResponse.self, from: data)
-                    completion(.success(result))
                     ApiManager.shared.accessToken = result.token
+                    completion(.success(result))
+                  
                 }
                 catch{
                     completion(.failure(error))
@@ -61,5 +60,5 @@ struct AuthApiManager{
             }
             task.resume()
         }
-    }
+    
 }

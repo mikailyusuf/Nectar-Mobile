@@ -9,16 +9,14 @@ import Foundation
 struct ApiManager{
     static  var shared = ApiManager()
    
-    func createRequest(with url:URL?,type:HTTPMethod,completion:@escaping(URLRequest)->Void){
-        
-        guard let apiUrl = url else{return}
-        
-        var request = URLRequest(url: apiUrl)
+    func createRequest(with url:URL,type:HTTPMethod)->URLRequest{
+  
+        var request = URLRequest(url: url)
         request.httpMethod = type.rawValue
         request.timeoutInterval = 60
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        completion(request)
+        return request
     }
 
     var accessToken:String {
