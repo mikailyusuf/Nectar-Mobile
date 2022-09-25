@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class FavouriteCollectionViewCell: UICollectionViewCell {
     
@@ -16,7 +15,6 @@ class FavouriteCollectionViewCell: UICollectionViewCell {
         let image = UIImageView(image: UIImage(named: "sprite"))
         image.contentMode  = .scaleAspectFill
         image.layer.cornerRadius = 8
-//        image.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         image.clipsToBounds = true
         return image
     }()
@@ -106,24 +104,3 @@ class FavouriteCollectionViewCell: UICollectionViewCell {
 }
 
 
-struct  FavouriteCollectionViewCellRepresentable:UIViewRepresentable{
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
-    
-    func makeUIView(context: Context) -> FavouriteCollectionViewCell {
-        let cell = FavouriteCollectionViewCell()
-        return cell
-    }
-}
-
-struct FavouriteCollectionViewCell_Preview:PreviewProvider{
-    
-    static var previews: some View{
-        Group{
-            FavouriteCollectionViewCellRepresentable()
-                .frame(width: 300, height: 120)
-        }
-    }
-}

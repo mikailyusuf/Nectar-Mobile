@@ -33,19 +33,23 @@ class CategoryTypeViewController: UIViewController {
         
     }
     
-    func getBrandProducts(){
-        BrandApiManager.shared.getBrandProducts(withBrand: brand.name) { result in
-            switch result{
-            case .success(let data):
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                    self.products = data
-                }
-           
-            case .failure(_):
-                print("An error occured getting Brand Products")
-            }
-        }
+    //MARK: AOPI CALL
+   func getBrandProducts(){
+       DispatchQueue.global(qos: .background).async {
+           BrandApiManager.shared.getBrandProducts(withBrand: self.brand.name) { result in
+               switch result{
+               case .success(let data):
+                   DispatchQueue.main.async {
+                       self.collectionView.reloadData()
+                       self.products = data
+                   }
+              
+               case .failure(_):
+                   print("An error occured getting Brand Products")
+               }
+           }
+       }
+      
     }
     
     

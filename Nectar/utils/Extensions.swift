@@ -140,6 +140,38 @@ extension UIView {
             onClick()
         }
     }
+    
+    
+    
+    func showProgress() {
+        let backgroundView = UIView()
+        backgroundView.frame = CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+        backgroundView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        backgroundView.tag = Constants.ACTIVITY_INDICATOR_TAG
+        
+        var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicator = UIActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
+        activityIndicator.center = self.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.medium
+        activityIndicator.startAnimating()
+        self.isUserInteractionEnabled = false
+        
+        backgroundView.addSubview(activityIndicator)
+
+        self.addSubview(backgroundView)
+    }
+
+    func hideProgress() {
+ 
+            if let background = self.viewWithTag(Constants.ACTIVITY_INDICATOR_TAG){
+                background.removeFromSuperview()
+            }
+            self.isUserInteractionEnabled = true
+        
+        
+    }
+    
   
 }
 
@@ -152,4 +184,9 @@ extension Int{
            return numberFormatter.string(from: NSNumber(value: self)) ?? ""
    
   }
+}
+
+extension ApiError: LocalizedError {
+    var errorDescription: String? { return message }
+
 }

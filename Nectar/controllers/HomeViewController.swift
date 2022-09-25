@@ -12,6 +12,10 @@ class HomeViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.isNavigationBarHidden = true
+        
+        
+        
         let vc1 = ShopViewController()
         let vc2 = ExploreViewController()
         let vc3 =   OrdersViewController()

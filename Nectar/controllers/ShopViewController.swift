@@ -55,6 +55,7 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         view.backgroundColor = .systemBackground
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -87,7 +88,7 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
     
     //MARK: API
     func getProducts(){
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .background).async {
             ProductApiManager.shared.getProducts { result in
                 switch result{
                     
@@ -120,16 +121,22 @@ class ShopViewController: UIViewController,UISearchResultsUpdating, UISearchBarD
               let query = searchController.searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else{
             return
         }
-        ProductApiManager.shared.searchProducts(query: query) { result in
-            switch result{
-                
-            case .success(let model):
-                resultsController.update(with: model)
-            case .failure(_):
-                print("an error occured")
-              
+        DispatchQueue.global(qos: .background).async {
+            ProductApiManager.shared.searchProducts(query: query) { result in
+                switch result{
+                    
+                case .success(let model):
+                    DispatchQueue.main.async {
+                        resultsController.update(with: model)
+                    }
+                  
+                case .failure(_):
+                    print("an error occured")
+                  
+                }
             }
         }
+    
     }
     
     

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class AccountCollectionViewCell: UICollectionViewCell {
     
@@ -73,25 +72,3 @@ class AccountCollectionViewCell: UICollectionViewCell {
     
 }
 
-
-struct  AccountCollectionViewCellRepresentable:UIViewRepresentable{
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
-    
-    func makeUIView(context: Context) -> AccountCollectionViewCell {
-        let cell = AccountCollectionViewCell()
-        return cell
-    }
-}
-
-struct AccountCollectionViewCell_Preview:PreviewProvider{
-    
-    static var previews: some View{
-        Group{
-            AccountCollectionViewCellRepresentable()
-                .frame(width: 300, height: 30)
-        }
-    }
-}

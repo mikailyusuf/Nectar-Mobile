@@ -19,6 +19,7 @@ struct AuthApiManager{
             request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else{
+                    completion(.failure(error!))
                     return
                 }
                 do{
@@ -27,8 +28,10 @@ struct AuthApiManager{
                     completion(.success(result))
                 }
                 catch{
-                    completion(.failure(error))
-                    print("An error occured with the request \(error)")
+                    guard let errroMessage = try? JSONDecoder().decode(ErrorResponse.self, from: data) else {
+                        return
+                    }
+                    completion(.failure(ApiError(message: errroMessage.message)))
                 }
             }
             task.resume()
@@ -43,8 +46,10 @@ struct AuthApiManager{
             let json:[String:String] = ["email":email,"password":password]
             request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 guard let data = data, error == nil else{
+                    completion(.failure(error!))
+                   
                     return
                 }
                 do{
@@ -54,8 +59,11 @@ struct AuthApiManager{
                   
                 }
                 catch{
-                    completion(.failure(error))
-                    print("An error occured with the request \(error)")
+                    guard let errroMessage = try? JSONDecoder().decode(ErrorResponse.self, from: data) else {
+                        return
+                    }
+                    completion(.failure(ApiError(message: errroMessage.message)))
+                    
                 }
             }
             task.resume()

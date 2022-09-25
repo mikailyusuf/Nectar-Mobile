@@ -22,10 +22,9 @@ struct ApiManager{
     var accessToken:String {
         get{
             guard let token = UserDefaults.standard.string(forKey: Constants.ACCESS_TOKEN) else{
-                return ""
+                return Constants.EMPTY
             }
             return token
-            
         }
         set(token){
             UserDefaults.standard.setValue(token, forKey: Constants.ACCESS_TOKEN)
@@ -38,5 +37,14 @@ struct ApiManager{
         case POST
         case UPDATE
         case DELETE
+    }
+    
+}
+
+struct ApiError:Error{
+    let message:String
+    
+    init(message:String){
+        self.message = message
     }
 }

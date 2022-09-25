@@ -15,4 +15,6 @@ struct Constants{
     
     static let BASE_URL = "https://fast-chamber-15946.herokuapp.com/api/"
     static let ACCESS_TOKEN = "ACCESS_TOKEN"
+    static let ACTIVITY_INDICATOR_TAG = 475647
+    static let EMPTY = ""
 }

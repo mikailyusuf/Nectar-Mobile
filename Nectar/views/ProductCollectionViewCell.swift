@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 import SDWebImage
 
 protocol ProductCollectionViewCellDelegate:AnyObject{

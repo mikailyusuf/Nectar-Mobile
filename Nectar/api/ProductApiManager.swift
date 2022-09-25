@@ -16,6 +16,7 @@ struct ProductApiManager{
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else{
+                completion(.failure(error!))
                 return
             }
             do{
@@ -36,6 +37,7 @@ struct ProductApiManager{
         let request = ApiManager.shared.createRequest(with: URL(string: Constants.BASE_URL + "product/find?name=\(query)")!, type: .GET)
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else{
+                    completion(.failure(error!))
                     return
                 }
                 do{

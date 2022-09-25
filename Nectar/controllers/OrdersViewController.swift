@@ -37,20 +37,25 @@ class OrdersViewController: UIViewController {
         
     }
     
+    
+    //MARK: API CALL
     func getOrders(){
-        OrdersApiManager.shared.getAllOrder { order in
-            switch order{
-            case .success(let data):
-                DispatchQueue.main.async {
-                    self.orders = data
-                    self.collectionView.reloadData()
+        DispatchQueue.global(qos: .background).async {
+            OrdersApiManager.shared.getAllOrder { order in
+                switch order{
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        self.orders = data
+                        self.collectionView.reloadData()
+                    }
+                   
+                    
+                case .failure(_):
+                    print("An error occured")
                 }
-               
-                
-            case .failure(_):
-                print("An error occured")
             }
         }
+
     }
     
 

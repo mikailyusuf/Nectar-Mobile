@@ -14,6 +14,7 @@ struct BrandApiManager{
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else{
+                completion(.failure(error!))
                 return
             }
             do{
@@ -35,6 +36,7 @@ struct BrandApiManager{
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else{
+                completion(.failure(error!))
                 return
             }
             do{

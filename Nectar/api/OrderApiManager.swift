@@ -15,6 +15,7 @@ struct OrdersApiManager{
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else{
+                completion(.failure(error!))
                 return
             }
             do{
@@ -35,6 +36,7 @@ struct OrdersApiManager{
         let request =  ApiManager.shared.createRequest(with: URL(string: Constants.BASE_URL + "order/all")!, type: .GET)
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else{
+                completion(.failure(error!))
                 return
             }
             do{

@@ -39,7 +39,7 @@ class ProductDetailViewController: UIViewController {
                 productCountlabel.centerY(inView: view)
                 productCountlabel.centerX(inView: view)
         view.layer.borderWidth =  0.5
-        view.layer.borderColor = Color.gray.cgColor
+//        view.layer.borderColor = Color.black.
         view.layer.cornerRadius = 16
         view.setDimensions(width: 45, height: 45)
         
@@ -91,19 +91,15 @@ class ProductDetailViewController: UIViewController {
        return stack
     }()
     
-    let lineView1:UIView = {
+    let dexcriptionDivider:UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         return view
     }()
     
-    let lineView2:UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        return view
-    }()
+  
     
-    let lineView3:UIView = {
+    let reviewDivider:UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         return view
@@ -208,11 +204,13 @@ class ProductDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"),
-                                                            style: .done, target: self, action: #selector(didTapRight))
+        self.navigationItem.largeTitleDisplayMode = .never
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image:UIImage(systemName: "arrow.left"),
-                                                            style: .done, target: self, action: #selector(didTapBack))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"),
+//                                                            style: .done, target: self, action: #selector(didTapRight))
+//
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image:UIImage(systemName: "arrow.left"),
+//                                                            style: .done, target: self, action: #selector(didTapBack))
         setupViews()
         setData()
     }
@@ -228,28 +226,35 @@ class ProductDetailViewController: UIViewController {
     
     private func setupViews(){
         view.addSubview(productImage)
+        view.addSubview(stackUnitDescription)
+        view.addSubview(priceStackView)
+        view.addSubview(dexcriptionDivider)
+        view.addSubview(detailStackView)
+        view.addSubview(reviewDivider)
+        view.addSubview(reviewStack)
+        view.addSubview(addToBasketBtn)
+        
         
         productImage.anchor(top:view.topAnchor,left: view.leftAnchor,right: view.rightAnchor,height: 300)
-        view.addSubview(stackUnitDescription)
+      
         stackUnitDescription.anchor(top:productImage.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16)
         
-        view.addSubview(priceStackView)
+       
         priceStackView.anchor(top:stackUnitDescription.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16)
         
-        view.addSubview(lineView1)
-        lineView1.anchor(top:priceStackView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 30,paddingLeft: 16,paddingRight: 16,height: 0.5)
+       
+        dexcriptionDivider.anchor(top:priceStackView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 30,paddingLeft: 16,paddingRight: 16,height: 0.5)
         
-        view.addSubview(detailStackView)
-        detailStackView.anchor(top:lineView1.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 16,paddingLeft: 16,paddingRight: 16)
+      
+        detailStackView.anchor(top:dexcriptionDivider.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 16,paddingLeft: 16,paddingRight: 16)
+              
+        reviewDivider.anchor(top:detailStackView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 0.5)
+        
+        
+        reviewStack.anchor(top:reviewDivider.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16,height: 30)
+        
         
 
-        view.addSubview(lineView3)
-        lineView3.anchor(top:detailStackView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 0.5)
-        
-        view.addSubview(reviewStack)
-        reviewStack.anchor(top:lineView3.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 8,paddingLeft: 16,paddingRight: 16,height: 30)
-        
-        view.addSubview(addToBasketBtn)
         addToBasketBtn.anchor(top:reviewStack.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 24,paddingLeft: 16,paddingRight: 16,height: 67)
         
     }
@@ -257,21 +262,30 @@ class ProductDetailViewController: UIViewController {
     
     //MARK: Selectors
     @objc func orderButtonTapped(){
-        showProgress()
+        self.view.showProgress()
         createOrder()
     }
     
-    //MARK: API
+    //MARK: API CALL
     private func createOrder(){
-        OrdersApiManager.shared.createOrder(withId: product.id) { result in
-            switch result{
-            case .success(let model):
-                self.hideProgress()
-                self.gotoCheckOutController(checkoutUrl: model.payment_url)
-            case .failure(_):
-                self.hideProgress()
+        DispatchQueue.global(qos: .background).async {
+            OrdersApiManager.shared.createOrder(withId: self.product.id) { result in
+                switch result{
+                case .success(let model):
+                    DispatchQueue.main.async {
+                        self.view.hideProgress()
+                        self.gotoCheckOutController(checkoutUrl: model.payment_url)
+                    }
+                
+                case .failure(_):
+                    DispatchQueue.main.async {
+                        self.view.hideProgress()
+                    }
+                  
+                }
             }
         }
+   
     }
     
     func gotoCheckOutController(checkoutUrl:String){
@@ -282,33 +296,15 @@ class ProductDetailViewController: UIViewController {
         }
 
     }
+
     
-    let spinner = SpinnerViewController()
-    
-    func showProgress() {
-        addChild(spinner)
-        spinner.view.frame = view.frame
-        view.addSubview(spinner.view)
-        spinner.didMove(toParent: self)
-    
-    }
-    
-    
-    func hideProgress(){
-        DispatchQueue.main.async{
-            self.spinner.willMove(toParent: nil)
-            self.spinner.view.removeFromSuperview()
-            self.spinner.removeFromParent()
-        }
-    }
-    
-    @objc func didTapRight(){
-        
-    }
-    
-    @objc func didTapBack(){
-        navigationController?.popViewController(animated: true)
-    }
+//    @objc func didTapRight(){
+//
+//    }
+//
+//    @objc func didTapBack(){
+//        navigationController?.popViewController(animated: true)
+//    }
 
     
  
