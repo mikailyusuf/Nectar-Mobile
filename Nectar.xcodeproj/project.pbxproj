@@ -44,6 +44,7 @@
 		5272B54C28D7610B00AAD0A7 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272B54B28D7610B00AAD0A7 /* UserModel.swift */; };
 		5275E6D028B23B12007339C2 /* CategoryTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5275E6CF28B23B12007339C2 /* CategoryTypeViewController.swift */; };
 		5275E6D228B24486007339C2 /* OrderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5275E6D128B24486007339C2 /* OrderCollectionViewCell.swift */; };
+		527CF09D28E062760034DC4D /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527CF09C28E062760034DC4D /* ErrorResponse.swift */; };
 		5282512E28B15C71005AA093 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5282512D28B15C71005AA093 /* CategoryCollectionViewCell.swift */; };
 		52EFD38528D60661002E1CD6 /* FavouriteApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFD38428D60661002E1CD6 /* FavouriteApiManager.swift */; };
 		52EFD38728D62270002E1CD6 /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFD38628D62270002E1CD6 /* Favourite.swift */; };
@@ -99,6 +100,7 @@
 		5272B54B28D7610B00AAD0A7 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		5275E6CF28B23B12007339C2 /* CategoryTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypeViewController.swift; sourceTree = "<group>"; };
 		5275E6D128B24486007339C2 /* OrderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCollectionViewCell.swift; sourceTree = "<group>"; };
+		527CF09C28E062760034DC4D /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		5282512D28B15C71005AA093 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		52EFD38428D60661002E1CD6 /* FavouriteApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteApiManager.swift; sourceTree = "<group>"; };
 		52EFD38628D62270002E1CD6 /* Favourite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				52EFD38628D62270002E1CD6 /* Favourite.swift */,
 				521182EF28D72D1700FC258D /* Brand.swift */,
 				5272B54B28D7610B00AAD0A7 /* UserModel.swift */,
+				527CF09C28E062760034DC4D /* ErrorResponse.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				5213A1EE289E910200A5B6BE /* Product.swift in Sources */,
 				5204A6BA288C378B00DE4C41 /* ShopViewController.swift in Sources */,
 				5204A6AA288AE0A500DE4C41 /* Constants.swift in Sources */,
+				527CF09D28E062760034DC4D /* ErrorResponse.swift in Sources */,
 				5204A6BE288C37AB00DE4C41 /* OrdersViewController.swift in Sources */,
 				52F5C52B28BC0BCD00731327 /* AccountFooterCollectionReusableView.swift in Sources */,
 				52F5C52528BA662D00731327 /* FavouriteCollectionViewCell.swift in Sources */,
@@ -495,7 +499,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -550,7 +554,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -575,6 +579,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -603,6 +608,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

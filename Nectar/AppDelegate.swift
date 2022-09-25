@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .systemBackground
         var vc:UIViewController
        
-        if(ApiManager.shared.accessToken == ""){
+        if(ApiManager.shared.accessToken == Constants.EMPTY){
          vc = UINavigationController(rootViewController:LoginViewController())
         }else{
             vc = HomeViewController()

@@ -118,11 +118,16 @@ extension AccountViewController:UICollectionViewDelegateFlowLayout{
 
 extension AccountViewController:AccountFooterDelegate{
     func logout(_ footer: AccountFooterCollectionReusableView) {
-        let vc = UINavigationController(rootViewController: LoginViewController())
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: false, completion:nil)
+        logoutUser()
     }
-
+    
+    func logoutUser(){
+        ApiManager.shared.accessToken = Constants.EMPTY
+        navigationController?.viewControllers.removeAll()
+        let navigationController = UINavigationController(rootViewController: LoginViewController())
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.window!.rootViewController = navigationController
+    }
 }
 
 extension AccountViewController:AccountHeaderDelegate{

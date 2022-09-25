@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 protocol AccountHeaderDelegate:AnyObject{
     func changeProfileimage(_ view:AccountHeaderCollectionReusableView)

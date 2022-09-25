@@ -21,37 +21,48 @@ class ExploreViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Home View"
         view.backgroundColor = .systemBackground
-        
-        
+//        navigationController?.navigationBar.prefersLargeTitles = false
         setupViews()
-        collectionView.frame = view.frame
         getBrands()
     }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.navigationBar.prefersLargeTitles = false
+//    }
     
     private func setupViews() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
 
+        collectionView.frame = view.frame
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
     }
     
+    
+    //MARK: API CALL
     private func getBrands(){
-        BrandApiManager.shared.getBrands { result in
-            switch result{
-            case .success(let data):
-                DispatchQueue.main.async {
-                
-                    self.brands = data
-                    self.collectionView.reloadData()
+        DispatchQueue.global(qos: .background).async {
+            BrandApiManager.shared.getBrands { result in
+                switch result{
+                case .success(let data):
+                    DispatchQueue.main.async {
+                    
+                        self.brands = data
+                        self.collectionView.reloadData()
+                    }
+                  
+                case .failure(_):
+                    print("An error occured")
                 }
-              
-            case .failure(_):
-                print("An error occured")
             }
         }
+   
     }
 }
 

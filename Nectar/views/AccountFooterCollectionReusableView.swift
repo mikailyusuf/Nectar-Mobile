@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 protocol AccountFooterDelegate:AnyObject{
     func logout(_ footer:AccountFooterCollectionReusableView)

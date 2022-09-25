@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import ToastViewSwift
 
 class LoginViewController: UIViewController {
     
     
     let iconView:UIImageView = {
-        let view = UIImageView(image: UIImage(named: "carrot_red"))
-        view.setDimensions(width: 48, height: 56)
+        let view = UIImageView(image: UIImage(named: "app_icon"))
+        view.setDimensions(width: 120, height: 100)
         return view
     }()
     
@@ -106,7 +107,13 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupViews()
+    
+    }
+    
+    
+    //MARK: setupviews
+    func setupViews(){
         view.addSubview(iconView)
         view.addSubview(loggingLabelText)
         view.addSubview(loggingLabelInfoText)
@@ -115,10 +122,11 @@ class LoginViewController: UIViewController {
         view.addSubview(buttonLogin)
         view.addSubview(signUpLabelStackView)
         
+        let topMargin = view.safeAreaInsets.top + 20
         iconView.centerX(inView: view)
-        iconView.anchor(top:view.topAnchor,paddingTop: 88)
+        iconView.anchor(top:view.topAnchor,paddingTop:topMargin)
         
-        loggingLabelText.anchor(top:iconView.bottomAnchor, left:view.leftAnchor,paddingTop:100, paddingLeft: 16)
+        loggingLabelText.anchor(top:iconView.bottomAnchor, left:view.leftAnchor,paddingTop:30, paddingLeft: 16)
         
         loggingLabelInfoText.anchor(top:loggingLabelText.bottomAnchor,left: view.leftAnchor,paddingTop:15, paddingLeft: 16)
 
@@ -142,35 +150,53 @@ class LoginViewController: UIViewController {
         signUpLabelStackView.isUserInteractionEnabled = true
         signUpLabelStackView.addGestureRecognizer(labelTap)
         
+        self.passwordTextField.delegate = self
+        self.emailTextField.delegate = self
     }
+    
     
     //MARK: Selectors
     @objc func handleLogin(){
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
-        showProgress()
-        DispatchQueue.main.async {
+        
+        
+        self.view.showProgress()
+        DispatchQueue.global(qos: .background).async {
             AuthApiManager.shared.loginUser(email: email, password: password) { result in
                 switch result{
                 case .success(_):
-                    self.hideProgress()
-                    self.presentHomeScreen()
-                case .failure(_):
-                    self.hideProgress()
-                    print("Error with login")
+                    self.navigateToHomeScreen()
+                case .failure(let error):
+
+                    DispatchQueue.main.async {
+                        self.view.hideProgress()
+                        Toast.text(error.localizedDescription).show()
+                    }
                 }
             }
+        }
+    
+    }
+    
+    func navigateToHomeScreen(){
+        DispatchQueue.main.async {
+            self.view.hideProgress()
+            self.presentHomeScreen()
         }
       
     }
     
     
     func presentHomeScreen(){
-        DispatchQueue.main.async {
-            let vc = UINavigationController(rootViewController: HomeViewController())
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: false, completion:nil)
-        }
+        
+        navigationController?.viewControllers.removeAll()
+//        navigationController?.pushViewController(HomeViewController(), animated: false)
+      
+            let navigationController = UINavigationController(rootViewController: HomeViewController())
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            appdelegate.window!.rootViewController = navigationController
+        
     }
     
     @objc func handleCreateAccountTapped(){
@@ -178,27 +204,15 @@ class LoginViewController: UIViewController {
     }
     
     
-    let spinner = SpinnerViewController()
-    
-    func showProgress() {
-        addChild(spinner)
-        spinner.view.frame = view.frame
-        view.addSubview(spinner.view)
-        spinner.didMove(toParent: self)
-    
-    }
-    
-    
-    func hideProgress(){
-        DispatchQueue.main.async{
-            self.spinner.willMove(toParent: nil)
-            self.spinner.view.removeFromSuperview()
-            self.spinner.removeFromParent()
-        }
-    }
-    
     @objc func emailTextFieldChanged() {
         emailTextField.text = emailTextField.text?.lowercased()
     }
     
+}
+
+extension LoginViewController:UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }

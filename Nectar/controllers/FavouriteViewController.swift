@@ -37,18 +37,22 @@ class FavouriteViewController: UIViewController {
         
     }
     
+    //MARK: API CALLS
     func getFavourites(){
-        FavouriteApiManager.shared.getAllFavourites { result in
-            switch result{
-            case .success(let response):
-                DispatchQueue.main.async {
-                    self.favourites = response
-                    self.collectionView.reloadData()
+        DispatchQueue.global(qos: .background).async {
+            FavouriteApiManager.shared.getAllFavourites { result in
+                switch result{
+                case .success(let response):
+                    DispatchQueue.main.async {
+                        self.favourites = response
+                        self.collectionView.reloadData()
+                    }
+                case .failure(_):
+                    print("An error occured")
                 }
-            case .failure(_):
-                print("An error occured")
             }
         }
+  
     }
 
 }

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 import RandomColorSwift
 
 class CategoryCollectionViewCell: UICollectionViewCell {
@@ -52,7 +51,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     func setup(brand:Brand){
         categoryImage.sd_setImage(with: URL(string: brand.image), completed: nil)
-//        categoryName.text = name
+
     }
     
     required init?(coder: NSCoder) {
@@ -61,24 +60,3 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
 }
 
-struct CategoryCollectionViewCellRepresentable:UIViewRepresentable{
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
-    
-    func makeUIView(context: Context) -> CategoryCollectionViewCell {
-        let cell = CategoryCollectionViewCell()
-        return cell
-    }
-}
-
-struct CategoryCollectionViewCell_Preview:PreviewProvider{
-   
-    static var previews:some View{
-        Group {
-            CategoryCollectionViewCellRepresentable()
-                .frame(width: 200, height: 180)
-        }
-    }
-}

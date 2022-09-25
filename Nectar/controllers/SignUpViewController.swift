@@ -6,12 +6,17 @@
 //
 
 import UIKit
+import ToastViewSwift
 
 class SignUpViewController: UIViewController {
   
+    
+    // to store the current active textfield
+      var activeTextField : UITextField? = nil
+    
     let iconView:UIImageView = {
-        let view = UIImageView(image: UIImage(named: "carrot_red"))
-        view.setDimensions(width: 48, height: 56)
+        let view = UIImageView(image: UIImage(named: "app_icon"))
+        view.setDimensions(width: 120, height: 100)
         return view
     }()
     
@@ -42,23 +47,27 @@ class SignUpViewController: UIViewController {
     
     var emailTextField:UITextField = {
         let textField = Utilities().textInputField()
+        textField.textContentType = .emailAddress
         return textField
     }()
     
     var passwordTextField:UITextField = {
         let textField = Utilities().textInputField()
-        textField.isSecureTextEntry = true
+//        textField.isSecureTextEntry = true
+//        textField.textContentType = .password
         return textField
     }()
     
     
     var usernameTextField:UITextField = {
         let textField = Utilities().textInputField()
+        textField.textContentType = .username
         return textField
     }()
     
     var phoneNumberTextField:UITextField = {
         let textField = Utilities().textInputField()
+        textField.textContentType = .telephoneNumber
         return textField
     }()
     
@@ -123,6 +132,51 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
   
+
+        setupViews()
+        
+        // call the 'keyboardWillShow' function when the view controller receive the notification that a keyboard is going to be shown
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+          
+              // call the 'keyboardWillHide' function when the view controlelr receive notification that keyboard is going to be hidden
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+
+      guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+
+        // if keyboard size is not available for some reason, dont do anything
+        return
+      }
+
+      var shouldMoveViewUp = false
+
+      // if active text field is not nil
+      if let activeTextField = activeTextField {
+
+        let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY;
+        
+        let topOfKeyboard = self.view.frame.height - keyboardSize.height
+
+        // if the bottom of Textfield is below the top of keyboard, move up
+        if bottomOfTextField > topOfKeyboard {
+          shouldMoveViewUp = true
+        }
+      }
+
+      if(shouldMoveViewUp) {
+        self.view.frame.origin.y = 0 - keyboardSize.height
+      }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+      // move back the root view origin to zero
+      self.view.frame.origin.y = 0
+    }
+    
+    
+    func setupViews(){
         view.addSubview(iconView)
         view.addSubview(signupLabelText)
         view.addSubview(credentialsInfoText)
@@ -131,10 +185,12 @@ class SignUpViewController: UIViewController {
         view.addSubview(loginLabelStackView)
         view.addSubview(buttonSigup)
         
-        iconView.centerX(inView: view)
-        iconView.anchor(top:view.topAnchor,paddingTop: 88)
+        let topMargin = view.safeAreaInsets.top + 20
         
-        signupLabelText.anchor(top:iconView.bottomAnchor, left:view.leftAnchor,paddingTop:60, paddingLeft: 16)
+        iconView.centerX(inView: view)
+        iconView.anchor(top:view.topAnchor,paddingTop: topMargin)
+        
+        signupLabelText.anchor(top:iconView.bottomAnchor, left:view.leftAnchor,paddingTop:20, paddingLeft: 16)
         
         credentialsInfoText.anchor(top:signupLabelText.bottomAnchor,left: view.leftAnchor,paddingTop:15, paddingLeft: 16)
 
@@ -156,8 +212,12 @@ class SignUpViewController: UIViewController {
         loginLabelStackView.centerX(inView: view)
         loginLabelStackView.anchor(top:buttonSigup.bottomAnchor,paddingTop: 16)
         
+        self.passwordTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.usernameTextField.delegate = self
+        self.phoneNumberTextField.delegate = self
+        
     }
-    
 //MARK: selectors
     
     @objc func handleSignup(){
@@ -168,17 +228,23 @@ class SignUpViewController: UIViewController {
         guard let password = passwordTextField.text else {return}
         
         let user = User(email: email, username: username, phoneNumber: phoneNumber, password: password)
-        showProgress()
-        DispatchQueue.main.async {
+        self.view.showProgress()
+        
+        DispatchQueue.global(qos: .background).async {
             AuthApiManager.shared.createUser(with: user) { [weak self] result  in
                 switch result{
-                case .success(let model):
-                    self?.presentHomeScreen()
-                    self?.hideProgress()
+                case .success(_):
+                    DispatchQueue.main.async {
+                        self?.presentHomeScreen()
+                        self?.view.hideProgress()
+                    }
+                  
                     
-                case .failure( _):
-                    self?.hideProgress()
-                    print("An error occured")
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self?.view.hideProgress()
+                        Toast.text(error.localizedDescription).show()
+                    }
                 }
                 
            
@@ -189,30 +255,27 @@ class SignUpViewController: UIViewController {
     
     func presentHomeScreen(){
         DispatchQueue.main.async {
-            let vc = UINavigationController(rootViewController: HomeViewController())
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: false, completion:nil)
-        }
-    }
-    
-    let spinner = SpinnerViewController()
-    
-    func showProgress() {
-        addChild(spinner)
-        spinner.view.frame = view.frame
-        view.addSubview(spinner.view)
-        spinner.didMove(toParent: self)
-    
-    }
-    
-    
-    func hideProgress(){
-        DispatchQueue.main.async{
-            self.spinner.willMove(toParent: nil)
-            self.spinner.view.removeFromSuperview()
-            self.spinner.removeFromParent()
+            let navigationController = UINavigationController(rootViewController: HomeViewController())
+            let appdelegate = UIApplication.shared.delegate as! AppDelegate
+            appdelegate.window!.rootViewController = navigationController
         }
     }
 
+}
 
+extension SignUpViewController:UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+       // set the activeTextField to the selected textfield
+       self.activeTextField = textField
+     }
+       
+     // when user click 'done' or dismiss the keyboard
+     func textFieldDidEndEditing(_ textField: UITextField) {
+       self.activeTextField = nil
+     }
 }
